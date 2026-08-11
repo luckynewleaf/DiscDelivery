@@ -1,0 +1,220 @@
+.gallery {
+	position: relative;
+}
+
+.gallery-viewport {
+	overflow: hidden;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	border-radius: 1.1rem;
+}
+
+.gallery-track {
+	display: flex;
+	transition: transform 0.28s ease;
+}
+
+.gallery-slide {
+	min-width: 100%;
+}
+
+.gallery-image {
+	aspect-ratio: 1 / 1;
+	border: 0;
+	display: grid;
+	place-items: center;
+	text-align: center;
+	font-size: 0.82rem;
+	letter-spacing: 0.08em;
+	font-weight: 700;
+	padding: 1rem;
+	background: #efefef;
+	color: #000000;
+	border-radius: 1.1rem;
+}
+
+.gallery-control {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 2rem;
+	height: 2rem;
+	border: 1px solid rgba(0, 0, 0, 0.35);
+	background: rgba(255, 255, 255, 0.84);
+	color: #000000;
+	cursor: pointer;
+	font-size: 1.1rem;
+	line-height: 1;
+	border-radius: 999px;
+}
+
+.gallery-control-prev {
+	left: 0.6rem;
+}
+
+.gallery-control-next {
+	right: 0.6rem;
+}
+
+.gallery-caption {
+	margin-top: 0.7rem;
+	font-size: 0.74rem;
+	letter-spacing: 0.08em;
+	font-weight: 700;
+	color: #000000;
+}
+
+.gallery-dots {
+	display: flex;
+	gap: 0.45rem;
+	margin-top: 0.6rem;
+}
+
+.gallery-dot {
+	width: 0.58rem;
+	height: 0.58rem;
+	border: 1px solid rgba(0, 0, 0, 0.45);
+	background: transparent;
+	cursor: pointer;
+	border-radius: 999px;
+}
+
+.gallery-dot[aria-selected="true"] {
+	background: #000000;
+}
+
+.artist-modal {
+	position: fixed;
+	inset: 0;
+	z-index: 50;
+	display: none;
+}
+
+.artist-modal.is-open {
+	display: block;
+}
+
+.artist-modal-backdrop {
+	position: absolute;
+	inset: 0;
+	background: rgba(0, 0, 0, 0.72);
+}
+
+.artist-modal-content {
+	position: relative;
+	margin: 4vh auto;
+	width: min(1080px, 92vw);
+	max-height: 92vh;
+	overflow: auto;
+	background: #ffffff;
+	color: #000000;
+	padding: 1.2rem;
+}
+
+.artist-modal-close {
+	position: sticky;
+	top: 0;
+	margin-left: auto;
+	display: block;
+	background: #ffffff;
+	border: 1px solid rgba(0, 0, 0, 0.4);
+	width: 2rem;
+	height: 2rem;
+	font-size: 1.3rem;
+	line-height: 1;
+	cursor: pointer;
+}
+
+.modal-edition {
+	margin-top: 0.6rem;
+	display: grid;
+	grid-template-columns: 1.1fr 1fr;
+	gap: 1.2rem;
+}
+
+.modal-portrait,
+.modal-album-art,
+.modal-box-image {
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	background: #efefef;
+	display: grid;
+	place-items: center;
+	text-align: center;
+	padding: 0.8rem;
+	font-size: 0.74rem;
+	letter-spacing: 0.08em;
+	font-weight: 700;
+}
+
+.modal-portrait {
+	aspect-ratio: 4 / 5;
+}
+
+.modal-name {
+	font-size: clamp(1.2rem, 2.4vw, 1.9rem);
+	font-weight: 700;
+	letter-spacing: 0.03em;
+}
+
+.modal-description {
+	margin-top: 0.85rem;
+	font-size: 0.9rem;
+	line-height: 1.7;
+	letter-spacing: 0.05em;
+}
+
+.modal-album-row {
+	margin-top: 1rem;
+	display: grid;
+	grid-template-columns: 90px 1fr;
+	gap: 0.8rem;
+}
+
+.modal-album-art {
+	aspect-ratio: 1 / 1;
+}
+
+.modal-links {
+	margin-top: 0.35rem;
+	display: flex;
+	gap: 0.8rem;
+}
+
+.modal-links a {
+	font-size: 0.78rem;
+	letter-spacing: 0.08em;
+	font-weight: 700;
+	text-decoration: none;
+	color: #000000;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.45);
+}
+
+.modal-box-grid {
+	margin-top: 1rem;
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 0.65rem;
+}
+
+.modal-box-image {
+	aspect-ratio: 1 / 1;
+}
+
+@media (max-width: 900px) {
+	.modal-edition {
+		grid-template-columns: 1fr;
+	}
+
+	.modal-box-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@media (max-width: 700px) {
+	.artist-modal-content {
+		padding: 0.9rem;
+	}
+
+	.modal-box-grid {
+		grid-template-columns: 1fr;
+	}
+}

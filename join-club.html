@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Join The Club | Disc Delivery</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="styles/style.css">
+	<link rel="stylesheet" href="styles/editions.css">
+	<link rel="stylesheet" href="styles/join-club.css">
+</head>
+<body>
+	<div class="page">
+		<header class="site-header">
+			<a class="logo-link" href="index.html" aria-label="Disc Delivery home">
+				<img class="logo-image" src="assets/DiscDelivery_Logo_White.png" alt="Disc Delivery">
+			</a>
+
+			<nav class="nav" aria-label="Main navigation">
+				<ul>
+					<li><a href="join-club.html" aria-current="page">Join The Club</a></li>
+					<li><a href="store.html">Store</a></li>
+					<li><a href="about.html">About</a></li>
+					<li><a href="for-artists.html">For Artists</a></li>
+					<li><a href="contact.html">Contact</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main class="join-page">
+			<section class="product-section" aria-labelledby="product-title">
+				<div class="product-grid">
+					<div class="gallery" aria-label="Disc Delivery box gallery" data-gallery></div>
+
+					<div class="product-copy">
+						<p class="eyebrow">The Disc Delivery Club</p>
+						<h2 id="product-title">Discover your next favorite artist.</h2>
+						<p>Each month, we handpick one independent artist and ship their album as a physical CD. The artist is revealed before the deadline. The exact album remains a mystery until your box arrives.</p>
+
+						<h3>Included</h3>
+						<ul class="included-list">
+							<li>1 physical CD featuring the selected album, signed by the artist when available</li>
+							<li>1 combined info card and art card featuring the artist portrait, album details, and tracklist</li>
+							<li>1 Meet The Artist email with deeper artist context, personal background, and process insights beyond social posts</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="membership-options" id="membership" aria-labelledby="membership-title">
+					<h3 id="membership-title">Choose Your Membership</h3>
+					<div class="plan-grid" data-membership-plans></div>
+				</div>
+			</section>
+
+			<section class="folder-section" data-folder-tabs aria-label="Disc Delivery archive folder">
+				<div class="folder-tab-row" role="tablist" aria-label="Disc Delivery folder tabs">
+					<button class="folder-tab is-active" type="button" role="tab" id="folder-tab-how" aria-selected="true" aria-controls="folder-panel-how" data-folder-tab="how">How It Works</button>
+					<button class="folder-tab" type="button" role="tab" id="folder-tab-who" aria-selected="false" aria-controls="folder-panel-who" data-folder-tab="who">Who Do We Choose?</button>
+					<button class="folder-tab" type="button" role="tab" id="folder-tab-artist" aria-selected="false" aria-controls="folder-panel-artist" data-folder-tab="artist">This Month's Artist</button>
+					<button class="folder-tab" type="button" role="tab" id="folder-tab-recent" aria-selected="false" aria-controls="folder-panel-recent" data-folder-tab="recent">Recent Editions</button>
+				</div>
+
+				<div class="folder-panel-frame">
+					<section class="folder-panel is-active" id="folder-panel-how" role="tabpanel" aria-labelledby="folder-tab-how" data-folder-panel="how">
+						<div class="panel-inner">
+							<div class="panel-content">
+								<h2>How It Works</h2>
+								<ol class="experience-steps">
+									<li><strong>01 — Join The Club</strong><span>Choose from our flexible subscription options: monthly, or prepaid plans for 3, 6, or 12 months.</span></li>
+									<li><strong>02 — Artist Reveal</strong><span>We reveal the featured artist about a week before the deadline. The exact album stays hidden until your box is in your hands.</span></li>
+									<li><strong>03 — Press Play</strong><span>Your signed CD arrives with an art card and a members-only email going deeper into the artist's story and process.</span></li>
+								</ol>
+							</div>
+							<div class="panel-photo" role="img" aria-label="How It Works photo"></div>
+						</div>
+					</section>
+
+					<section class="folder-panel" id="folder-panel-who" role="tabpanel" aria-labelledby="folder-tab-who" data-folder-panel="who" hidden>
+						<div class="panel-inner">
+							<div class="panel-content">
+								<h2>Who Do We Choose?</h2>
+								<p>Disc Delivery focuses on independent and emerging artists with strong identity, inventive music, and real creative perspective. We look for artists with something distinct to say — people we believe deserve wider audiences.</p>
+								<p>They do not need to be unknown. The key idea is new-to-you: records and voices you have not found yet, but might end up loving.</p>
+								<p class="panel-policy">We do not feature artists who create AI-generated or AI-assisted music.</p>
+							</div>
+							<div class="panel-photo" role="img" aria-label="Artist selection photo"></div>
+						</div>
+					</section>
+
+					<section class="folder-panel" id="folder-panel-artist" role="tabpanel" aria-labelledby="folder-tab-artist" data-folder-panel="artist" hidden>
+						<h2 id="featured-title">This Month's Artist</h2>
+						<div class="featured-artist" aria-labelledby="featured-title">
+							<div class="featured-panel" data-featured-panel>
+								<button class="select-button reveal-button" type="button" data-reveal-artist>Click to reveal this month's artist.</button>
+								<div class="featured-content" data-featured-content hidden></div>
+							</div>
+							<div class="featured-portrait" role="img" aria-label="Hidden artist portrait" data-featured-portrait>
+								<span>Artist Portrait</span>
+							</div>
+						</div>
+					</section>
+
+					<section class="folder-panel" id="folder-panel-recent" role="tabpanel" aria-labelledby="folder-tab-recent" data-folder-panel="recent" hidden>
+						<h2>Recent Editions</h2>
+						<div class="recent-grid" data-recent-editions></div>
+						<a class="archive-link" href="archive/">View The Archive &#8594;</a>
+					</section>
+				</div>
+			</section>
+
+			<section class="section faq" aria-labelledby="faq-title">
+				<h2 id="faq-title">FAQ</h2>
+				<div class="faq-list">
+					<details>
+						<summary>How does the Disc Delivery Club work?</summary>
+						<p>You subscribe, we reveal the monthly artist before deadline, and we ship your mystery album edition after the window closes.</p>
+					</details>
+					<details>
+						<summary>When is the artist revealed?</summary>
+						<p>About one week before the monthly subscription deadline.</p>
+					</details>
+					<details>
+						<summary>When do I find out which album I'm receiving?</summary>
+						<p>The specific album remains a mystery until your box arrives.</p>
+					</details>
+					<details>
+						<summary>When does my box ship?</summary>
+						<p>Shortly after the monthly subscription deadline closes.</p>
+					</details>
+					<details>
+						<summary>Can I skip a month?</summary>
+						<p>Yes. Members can skip a month without cancelling their membership.</p>
+					</details>
+					<details>
+						<summary>Can I cancel my membership?</summary>
+						<p>Yes. Cancel before your next billing cycle to stop renewal.</p>
+					</details>
+					<details>
+						<summary>Where do you ship?</summary>
+						<p>Shipping regions and rates are shown clearly at checkout.</p>
+					</details>
+					<details>
+						<summary>What happens if my CD arrives damaged?</summary>
+						<p>If the CD itself is damaged, we first offer a replacement and a discount code for your next box. If replacement stock is unavailable, you receive a full refund for that box and can keep the damaged one. This policy applies to CD and product damage, not cosmetic shipping-box wear.</p>
+					</details>
+					<details>
+						<summary>What if I already own the album?</summary>
+						<p>Contact us and we will try to help with an alternative when available.</p>
+					</details>
+					<details>
+						<summary>Are the CDs signed?</summary>
+						<p>Yes, signed copies are included whenever available through the artist.</p>
+					</details>
+				</div>
+			</section>
+
+		</main>
+	</div>
+
+	<div class="artist-modal" data-artist-modal aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modal-artist-name">
+		<div class="artist-modal-backdrop" data-modal-close></div>
+		<div class="artist-modal-content" role="document">
+			<button class="artist-modal-close" type="button" aria-label="Close artist details" data-modal-close>&times;</button>
+			<div class="artist-modal-body" data-modal-body></div>
+		</div>
+	</div>
+
+	<script src="scripts/editions-data.js"></script>
+	<script src="scripts/edition-components.js"></script>
+	<script src="scripts/join-club.js"></script>
+</body>
+</html>
