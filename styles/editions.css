@@ -105,9 +105,10 @@
 	width: min(1080px, 92vw);
 	max-height: 92vh;
 	overflow: auto;
-	background: #ffffff;
-	color: #000000;
-	padding: 1.2rem;
+	background: #4287f5;
+	color: #ffffff;
+	padding: 1.8rem 2rem 2rem;
+	border-radius: 1.2rem;
 }
 
 .artist-modal-close {
@@ -115,27 +116,33 @@
 	top: 0;
 	margin-left: auto;
 	display: block;
-	background: #ffffff;
-	border: 1px solid rgba(0, 0, 0, 0.4);
+	background: transparent;
+	border: 1px solid rgba(255, 255, 255, 0.55);
+	color: #ffffff;
 	width: 2rem;
 	height: 2rem;
+	border-radius: 999px;
 	font-size: 1.3rem;
 	line-height: 1;
 	cursor: pointer;
 }
 
+.artist-modal-close:hover {
+	background: rgba(255, 255, 255, 0.15);
+}
+
 .modal-edition {
 	margin-top: 0.6rem;
 	display: grid;
-	grid-template-columns: 1.1fr 1fr;
-	gap: 1.2rem;
+	grid-template-columns: 0.55fr 1fr;
+	gap: 1.4rem;
 }
 
 .modal-portrait,
 .modal-album-art,
 .modal-box-image {
-	border: 1px solid rgba(0, 0, 0, 0.2);
-	background: #efefef;
+	border: 1px solid rgba(255, 255, 255, 0.28);
+	background: rgba(255, 255, 255, 0.08);
 	display: grid;
 	place-items: center;
 	text-align: center;
@@ -143,6 +150,7 @@
 	font-size: 0.74rem;
 	letter-spacing: 0.08em;
 	font-weight: 700;
+	border-radius: 1rem;
 }
 
 .modal-portrait {
@@ -155,6 +163,13 @@
 	letter-spacing: 0.03em;
 }
 
+.modal-meta {
+	margin-top: 0.3rem;
+	font-size: 0.8rem;
+	letter-spacing: 0.07em;
+	opacity: 0.65;
+}
+
 .modal-description {
 	margin-top: 0.85rem;
 	font-size: 0.9rem;
@@ -162,21 +177,11 @@
 	letter-spacing: 0.05em;
 }
 
-.modal-album-row {
-	margin-top: 1rem;
-	display: grid;
-	grid-template-columns: 90px 1fr;
-	gap: 0.8rem;
-}
-
-.modal-album-art {
-	aspect-ratio: 1 / 1;
-}
-
 .modal-links {
-	margin-top: 0.35rem;
+	margin-top: 1rem;
 	display: flex;
-	gap: 0.8rem;
+	gap: 0.6rem;
+	flex-wrap: wrap;
 }
 
 .modal-links a {
@@ -184,19 +189,17 @@
 	letter-spacing: 0.08em;
 	font-weight: 700;
 	text-decoration: none;
-	color: #000000;
-	border-bottom: 1px solid rgba(0, 0, 0, 0.45);
+	color: #ffffff;
+	border: 1px solid rgba(255, 255, 255, 0.55);
+	padding: 0.35rem 0.8rem;
+	border-radius: 999px;
 }
 
-.modal-box-grid {
-	margin-top: 1rem;
-	display: grid;
-	grid-template-columns: repeat(3, minmax(0, 1fr));
-	gap: 0.65rem;
-}
-
-.modal-box-image {
-	aspect-ratio: 1 / 1;
+.modal-links a:hover,
+.modal-links a:focus-visible {
+	background: #ffffff;
+	color: #4287f5;
+	outline: none;
 }
 
 @media (max-width: 900px) {

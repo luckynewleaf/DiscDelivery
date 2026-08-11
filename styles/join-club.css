@@ -182,7 +182,8 @@
 
 .select-button {
 	margin-top: 0.85rem;
-	display: inline-block;
+	display: block;
+	text-align: center;
 	text-decoration: none;
 	font-size: 0.8rem;
 	letter-spacing: 0.09em;
@@ -361,31 +362,37 @@
 }
 
 .featured-artist {
-	display: grid;
-	grid-template-columns: 1fr 0.55fr;
-	gap: 2.8rem;
-	align-items: start;
-	border-top: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 2.5rem 0;
 	position: relative;
 }
 
+.featured-artist.is-revealed {
+	display: grid;
+	grid-template-columns: 0.55fr 1fr;
+	gap: 2.8rem;
+	align-items: start;
+	padding: 0;
+}
+
 .featured-portrait {
+	display: none;
 	aspect-ratio: 4 / 5;
 	border: 1px solid rgba(255, 255, 255, 0.28);
-	display: grid;
 	place-items: center;
 	text-align: center;
 	padding: 1rem;
 	font-size: 0.74rem;
 	font-weight: 700;
 	letter-spacing: 0.08em;
-	background: rgba(255, 255, 255, 0.06);
+	background: rgba(255, 255, 255, 0.08);
 	border-radius: 1rem;
-	transition: background-color 0.45s ease;
 }
 
 .featured-artist.is-revealed .featured-portrait {
-	background: rgba(255, 255, 255, 0.08);
+	display: grid;
 }
 
 .featured-panel .reveal-button {
@@ -403,6 +410,31 @@
 	margin-top: 1.3rem;
 }
 
+.artist-links {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.55rem;
+	margin-top: 1.3rem;
+}
+
+.artist-links a {
+	font-size: 0.76rem;
+	letter-spacing: 0.08em;
+	font-weight: 700;
+	color: #ffffff;
+	text-decoration: none;
+	border: 1px solid rgba(255, 255, 255, 0.55);
+	padding: 0.35rem 0.8rem;
+	border-radius: 999px;
+}
+
+.artist-links a:hover,
+.artist-links a:focus-visible {
+	background: #ffffff;
+	color: #4287f5;
+	outline: none;
+}
+
 .featured-content .artist-name {
 	font-size: 1.2rem;
 	letter-spacing: 0.03em;
@@ -411,6 +443,21 @@
 
 .featured-content .artist-detail {
 	margin-top: 0.7rem;
+}
+
+.panel-row-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	gap: 1rem;
+}
+
+.panel-row-header + * {
+	margin-top: 1.25rem;
+}
+
+.archive-button {
+	display: none;
 }
 
 .featured-album {
@@ -512,6 +559,11 @@
 .archive-link {
 	display: inline-block;
 	margin-top: 1.2rem;
+}
+
+.panel-row-header .archive-link {
+	margin-top: 0;
+	flex-shrink: 0;
 }
 
 .faq-list {

@@ -12,13 +12,19 @@
 		return;
 	}
 
-	grid.innerHTML = data.editions
+	/* render newest (this month) first, oldest last */
+	const editions = data.editions;
+
+	grid.innerHTML = editions
 		.map(function (edition) {
+			const isFeatured = edition.id === data.featuredEditionId;
+			const featuredBadge = isFeatured ? "<span class=\"archive-featured-badge\">This Month</span>" : "";
 			return [
-				"<button class=\"archive-item\" type=\"button\" data-edition-id=\"" + edition.id + "\">",
+				"<button class=\"archive-item" + (isFeatured ? " is-featured" : "") + "\" type=\"button\" data-edition-id=\"" + edition.id + "\">",
+				featuredBadge,
 				"<span class=\"edition-portrait\" role=\"img\" aria-label=\"" + edition.portraitLabel + "\">" + edition.portraitLabel + "</span>",
 				"<span class=\"edition-name\">" + edition.artistName + "</span>",
-				"<span class=\"edition-meta\">" + edition.monthYear + " " + edition.editionCode + "</span>",
+				"<span class=\"edition-meta\">" + edition.monthYear + " · " + edition.editionCode + "</span>",
 				"</button>"
 			].join("");
 		})

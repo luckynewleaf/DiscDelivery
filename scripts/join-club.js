@@ -49,20 +49,24 @@
 		}
 
 		featuredPortrait.innerHTML = "<span>" + edition.portraitLabel + "</span>";
+		const linksMarkup = [];
+		if (edition.websiteUrl) {
+			linksMarkup.push("<a href=\"" + edition.websiteUrl + "\">Website</a>");
+		}
+		if (edition.instagramUrl) {
+			linksMarkup.push("<a href=\"" + edition.instagramUrl + "\">Instagram</a>");
+		}
+		if (edition.appleMusicUrl) {
+			linksMarkup.push("<a href=\"" + edition.appleMusicUrl + "\">Apple Music</a>");
+		}
+		if (edition.spotifyUrl) {
+			linksMarkup.push("<a href=\"" + edition.spotifyUrl + "\">Spotify</a>");
+		}
 		featuredContent.innerHTML = [
 			"<p class=\"artist-name\">" + edition.artistName + "</p>",
 			"<p class=\"artist-meta\">" + edition.monthYear + " \u00b7 " + edition.editionCode + "</p>",
 			"<p class=\"artist-detail\">" + edition.description + " " + edition.musicalIdentity + " " + edition.whySelected + "</p>",
-			"<div class=\"featured-album\">",
-			"<div class=\"album-art\" role=\"img\" aria-label=\"" + edition.albumLabel + "\">" + edition.albumLabel + "</div>",
-			"<div class=\"album-meta\">",
-			"<p>" + edition.albumTitle + "</p>",
-			"<div class=\"stream-links\">",
-			"<a href=\"" + edition.appleMusicUrl + "\">Apple Music</a>",
-			"<a href=\"" + edition.spotifyUrl + "\">Spotify</a>",
-			"</div>",
-			"</div>",
-			"</div>"
+			linksMarkup.length ? "<div class=\"artist-links\">" + linksMarkup.join("") + "</div>" : ""
 		].join("");
 	}
 
@@ -123,9 +127,6 @@
 				const isActive = tab.dataset.folderTab === name;
 				tab.classList.toggle("is-active", isActive);
 				tab.setAttribute("aria-selected", isActive ? "true" : "false");
-				if (isActive) {
-					tab.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
-				}
 			});
 
 			panels.forEach(function (panel) {
@@ -142,6 +143,7 @@
 		tabs.forEach(function (tab, index) {
 			tab.addEventListener("click", function () {
 				activate(tab.dataset.folderTab);
+				tab.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
 			});
 
 			tab.addEventListener("keydown", function (event) {

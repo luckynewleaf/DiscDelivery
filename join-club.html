@@ -92,20 +92,22 @@
 					<section class="folder-panel" id="folder-panel-artist" role="tabpanel" aria-labelledby="folder-tab-artist" data-folder-panel="artist" hidden>
 						<h2 id="featured-title">This Month's Artist</h2>
 						<div class="featured-artist" aria-labelledby="featured-title">
+							<div class="featured-portrait" role="img" aria-label="Artist portrait" data-featured-portrait>
+								<span>Artist Portrait</span>
+							</div>
 							<div class="featured-panel" data-featured-panel>
 								<button class="select-button reveal-button" type="button" data-reveal-artist>Click to reveal this month's artist.</button>
 								<div class="featured-content" data-featured-content hidden></div>
-							</div>
-							<div class="featured-portrait" role="img" aria-label="Hidden artist portrait" data-featured-portrait>
-								<span>Artist Portrait</span>
 							</div>
 						</div>
 					</section>
 
 					<section class="folder-panel" id="folder-panel-recent" role="tabpanel" aria-labelledby="folder-tab-recent" data-folder-panel="recent" hidden>
-						<h2>Recent Editions</h2>
+						<div class="panel-row-header">
+							<h2>Recent Editions</h2>
+							<a class="archive-link" href="archive/index.html">View full archive</a>
+						</div>
 						<div class="recent-grid" data-recent-editions></div>
-						<a class="archive-link" href="archive/">View The Archive &#8594;</a>
 					</section>
 				</div>
 			</section>

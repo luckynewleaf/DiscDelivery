@@ -113,29 +113,28 @@
 		let lastFocusedElement = null;
 
 		function renderModalBody(edition) {
-			const boxMarkup = edition.boxImages
-				.map(function (label) {
-					return "<div class=\"modal-box-image\" role=\"img\" aria-label=\"" + label + "\">" + label + "</div>";
-				})
-				.join("");
+			const linksMarkup = [];
+			if (edition.websiteUrl) {
+				linksMarkup.push("<a href=\"" + edition.websiteUrl + "\">Website</a>");
+			}
+			if (edition.instagramUrl) {
+				linksMarkup.push("<a href=\"" + edition.instagramUrl + "\">Instagram</a>");
+			}
+			if (edition.appleMusicUrl) {
+				linksMarkup.push("<a href=\"" + edition.appleMusicUrl + "\">Apple Music</a>");
+			}
+			if (edition.spotifyUrl) {
+				linksMarkup.push("<a href=\"" + edition.spotifyUrl + "\">Spotify</a>");
+			}
 
 			body.innerHTML = [
 				"<article class=\"modal-edition\">",
 				"<div class=\"modal-portrait\" role=\"img\" aria-label=\"" + edition.portraitLabel + "\">" + edition.portraitLabel + "</div>",
-				"<div>",
+				"<div class=\"modal-info\">",
 				"<h2 class=\"modal-name\" id=\"modal-artist-name\">" + edition.artistName + "</h2>",
+				"<p class=\"modal-meta\">" + edition.monthYear + " \u00b7 " + edition.editionCode + "</p>",
 				"<p class=\"modal-description\">" + edition.description + " " + edition.musicalIdentity + " " + edition.whySelected + "</p>",
-				"<div class=\"modal-album-row\">",
-				"<div class=\"modal-album-art\" role=\"img\" aria-label=\"" + edition.albumLabel + "\">" + edition.albumLabel + "</div>",
-				"<div>",
-				"<p>" + edition.albumTitle + "</p>",
-				"<div class=\"modal-links\">",
-				"<a href=\"" + edition.appleMusicUrl + "\">Apple Music</a>",
-				"<a href=\"" + edition.spotifyUrl + "\">Spotify</a>",
-				"</div>",
-				"</div>",
-				"</div>",
-				"<div class=\"modal-box-grid\">" + boxMarkup + "</div>",
+				linksMarkup.length ? "<div class=\"modal-links\">" + linksMarkup.join("") + "</div>" : "",
 				"</div>",
 				"</article>"
 			].join("");
