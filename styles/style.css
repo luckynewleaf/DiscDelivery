@@ -124,6 +124,10 @@ button,
 	margin-top: 3.7rem;
 }
 
+.home-page .hero {
+	margin-top: 0;
+}
+
 .hero-photo {
 	width: 100%;
 	aspect-ratio: 2.12 / 1;
@@ -138,7 +142,7 @@ button,
 }
 
 .hero-photo::after {
-	content: "Hero photo";
+	content: "Hero video";
 	position: absolute;
 	right: 1rem;
 	bottom: 0.8rem;
@@ -276,6 +280,10 @@ button,
 
 	.hero {
 		margin-top: 2.35rem;
+	}
+
+	.home-page .hero {
+		margin-top: 0;
 	}
 
 	.hero-photo {
