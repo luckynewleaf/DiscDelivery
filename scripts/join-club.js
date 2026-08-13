@@ -7,6 +7,11 @@
 	const data = components.getData();
 	const galleryRoot = document.querySelector("[data-gallery]");
 	const plansRoot = document.querySelector("[data-membership-plans]");
+	const productTitle = document.querySelector("[data-product-title]");
+	const productDescription = document.querySelector("[data-product-description]");
+	const includedItemsRoot = document.querySelector("[data-included-items]");
+	const editionToggleRoot = document.querySelector("[data-edition-toggle]");
+	const editionButtons = editionToggleRoot ? Array.from(editionToggleRoot.querySelectorAll("[data-product-edition]")) : [];
 	const recentRoot = document.querySelector("[data-recent-editions]");
 	const revealButton = document.querySelector("[data-reveal-artist]");
 	const featuredContent = document.querySelector("[data-featured-content]");
@@ -14,15 +19,24 @@
 	const featuredSection = document.querySelector(".featured-artist");
 	const folderRoot = document.querySelector("[data-folder-tabs]");
 	const modal = components.initArtistModal(document.querySelector("[data-artist-modal]"));
+	const productEditions = data.productEditions || {};
+	let activeEditionKey = "standard";
 
-	components.initGallery(galleryRoot);
+	function getEditionConfig(editionKey) {
+		if (editionKey && productEditions[editionKey]) {
+			return productEditions[editionKey];
+		}
+		return productEditions.standard || null;
+	}
 
-	function renderPlans() {
+	function renderPlans(plans) {
 		if (!plansRoot) {
 			return;
 		}
 
-		plansRoot.innerHTML = data.membershipPlans
+		const membershipPlans = plans || data.membershipPlans || [];
+
+		plansRoot.innerHTML = membershipPlans
 			.map(function (plan) {
 				const badge = plan.saving ? "<p class=\"saving-badge\">" + plan.saving + "</p>" : "<p class=\"saving-badge-empty\"></p>";
 				const subprice = plan.subprice ? "<p class=\"subprice\">" + plan.subprice + "</p>" : "<p class=\"subprice\"></p>";
@@ -41,6 +55,53 @@
 				].join("");
 			})
 			.join("");
+	}
+
+	function renderIncludedItems(items) {
+		if (!includedItemsRoot) {
+			return;
+		}
+
+		includedItemsRoot.innerHTML = (items || [])
+			.map(function (item) {
+				const photoLabel = item.photoLabel || item.title;
+				const description = item.description || "";
+				return [
+					"<li class=\"included-item\">",
+					"<div class=\"included-photo\" role=\"img\" aria-label=\"" + photoLabel + "\">" + photoLabel + "</div>",
+					"<div class=\"included-copy\">",
+					"<strong>" + item.title + "</strong>",
+					description ? "<p>" + description + "</p>" : "",
+					"</div>",
+					"</li>"
+				].join("");
+			})
+			.join("");
+	}
+
+	function activateEdition(editionKey) {
+		const editionConfig = getEditionConfig(editionKey);
+		if (!editionConfig) {
+			return;
+		}
+
+		activeEditionKey = editionConfig.key;
+		editionButtons.forEach(function (button) {
+			const isActive = button.dataset.productEdition === activeEditionKey;
+			button.classList.toggle("is-active", isActive);
+			button.setAttribute("aria-selected", isActive ? "true" : "false");
+		});
+
+		if (productTitle) {
+			productTitle.textContent = editionConfig.title;
+		}
+		if (productDescription) {
+			productDescription.textContent = editionConfig.description;
+		}
+
+		renderIncludedItems(editionConfig.includedItems);
+		renderPlans(editionConfig.membershipPlans);
+		components.initGallery(galleryRoot, editionConfig.gallerySlides);
 	}
 
 	function renderFeaturedEdition(edition) {
@@ -169,14 +230,14 @@
 			return;
 		}
 
-		const recent = data.editions.slice(1, 4);
+		const recent = data.editions.slice(0, 4);
 		recentRoot.innerHTML = recent
 			.map(function (edition) {
 				return [
 					"<button class=\"edition-tile\" type=\"button\" data-edition-id=\"" + edition.id + "\">",
 					"<span class=\"edition-portrait\" role=\"img\" aria-label=\"" + edition.portraitLabel + "\">" + edition.portraitLabel + "</span>",
 					"<span class=\"edition-name\">" + edition.artistName + "</span>",
-					"<span class=\"edition-meta\">" + edition.monthYear + " " + edition.editionCode + "</span>",
+					"<span class=\"edition-meta\">" + edition.monthYear + " \u00b7 " + edition.editionCode + "</span>",
 					"</button>"
 				].join("");
 			})
@@ -200,8 +261,27 @@
 		});
 	}
 
+	if (editionButtons.length) {
+		editionButtons.forEach(function (button, index) {
+			button.addEventListener("click", function () {
+				activateEdition(button.dataset.productEdition);
+			});
+
+			button.addEventListener("keydown", function (event) {
+				if (event.key !== "ArrowRight" && event.key !== "ArrowLeft") {
+					return;
+				}
+				event.preventDefault();
+				const offset = event.key === "ArrowRight" ? 1 : -1;
+				const nextIndex = (index + offset + editionButtons.length) % editionButtons.length;
+				editionButtons[nextIndex].focus();
+				activateEdition(editionButtons[nextIndex].dataset.productEdition);
+			});
+		});
+	}
+
 	setRedactedState();
-	renderPlans();
+	activateEdition("standard");
 	renderRecentEditions();
 	initFolderTabs(folderRoot);
 })();

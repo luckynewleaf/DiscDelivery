@@ -22,17 +22,16 @@
 			"<button class=\"gallery-control gallery-control-prev\" type=\"button\" aria-label=\"Previous image\" data-gallery-prev><span aria-hidden=\"true\">&#8592;</span></button>",
 			"<div class=\"gallery-viewport\" data-gallery-viewport><div class=\"gallery-track\" data-gallery-track>" + slideMarkup + "</div></div>",
 			"<button class=\"gallery-control gallery-control-next\" type=\"button\" aria-label=\"Next image\" data-gallery-next><span aria-hidden=\"true\">&#8594;</span></button>",
-			"<p class=\"gallery-caption\" data-gallery-caption></p>",
 			"<div class=\"gallery-dots\" role=\"tablist\" aria-label=\"Gallery slide selector\" data-gallery-dots></div>"
 		].join("");
 	}
 
-	function initGallery(rootElement) {
+	function initGallery(rootElement, slidesDataOverride) {
 		if (!rootElement) {
 			return;
 		}
 
-		const slidesData = getData().gallerySlides || [];
+		const slidesData = slidesDataOverride || getData().gallerySlides || [];
 		rootElement.innerHTML = createGalleryMarkup(slidesData);
 
 		const track = rootElement.querySelector("[data-gallery-track]");
@@ -52,7 +51,9 @@
 
 		function update() {
 			track.style.transform = "translateX(-" + index * 100 + "%)";
-			caption.textContent = slides[index].dataset.caption || "";
+			if (caption) {
+				caption.textContent = slides[index].dataset.caption || "";
+			}
 			Array.from(dotsRoot.children).forEach((dot, dotIndex) => {
 				dot.setAttribute("aria-selected", dotIndex === index ? "true" : "false");
 			});

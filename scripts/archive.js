@@ -21,8 +21,10 @@
 			const featuredBadge = isFeatured ? "<span class=\"archive-featured-badge\">This Month</span>" : "";
 			return [
 				"<button class=\"archive-item" + (isFeatured ? " is-featured" : "") + "\" type=\"button\" data-edition-id=\"" + edition.id + "\">",
+				"<span class=\"archive-portrait-wrap\">",
 				featuredBadge,
 				"<span class=\"edition-portrait\" role=\"img\" aria-label=\"" + edition.portraitLabel + "\">" + edition.portraitLabel + "</span>",
+				"</span>",
 				"<span class=\"edition-name\">" + edition.artistName + "</span>",
 				"<span class=\"edition-meta\">" + edition.monthYear + " · " + edition.editionCode + "</span>",
 				"</button>"

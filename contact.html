@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Contact | Disc Delivery</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+	<div class="page">
+		<header class="site-header">
+			<a class="logo-link" href="index.html" aria-label="Disc Delivery home">
+				<img class="logo-image" src="assets/DiscDelivery_Logo_White.png" alt="Disc Delivery">
+			</a>
+			<nav class="nav" aria-label="Main navigation">
+				<ul>
+					<li><a href="join-club.html">Join The Club</a></li>
+					<li><a href="shop.html">Shop</a></li>
+					<li><a href="about.html">About</a></li>
+					<li><a href="contact.html" aria-current="page">Contact</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main class="new-page">
+			<section class="section-slab section-slab--plain contact-simple">
+				<h2 class="section-heading page-main-title">Contact Us</h2>
+				<div class="story-copy contact-lines">
+					<p>Customer Care: customercare@notreallystrangers.com</p>
+					<p>Press &amp; Business Inquiries: info@notreallystrangers.com</p>
+					<div class="contact-line">
+						<p>For artists: apply@discdelivery.com</p>
+						<button class="info-button" type="button" aria-label="Artist submission information" data-contact-info-open>Artist Requirements</button>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="site-footer site-footer-legal" aria-label="Site footer">
+			<p class="footer-line footer-brand">Disc Delivery</p>
+			<p class="footer-line footer-links"><a href="privacy-policy.html">Privacy Policy</a><span aria-hidden="true">·</span><a href="terms-of-service.html">Terms of Service</a></p>
+			<p class="footer-line footer-copy">© 2026 Disc Delivery</p>
+		</footer>
+		<div class="contact-dialog" hidden data-contact-info-dialog aria-hidden="true">
+			<div class="contact-dialog-card" role="dialog" aria-modal="true" aria-labelledby="contact-info-title">
+				<button class="contact-dialog-close" type="button" aria-label="Close artist submission information" data-contact-info-close>&times;</button>
+				<h2 id="contact-info-title">Artist requirements</h2>
+				<div class="story-copy">
+					<p>We are looking for artists who are already signed to a label and who either have CD stock or can produce it. We do not have the capability to manufacture CDs ourselves.</p>
+					<p>Please include:</p>
+					<ul>
+						<li>Real name</li>
+						<li>Stage name</li>
+						<li>Birthdate</li>
+						<li>Label you are signed to</li>
+						<li>Country</li>
+						<li>Links or usernames for your primary social media, like TikTok and Instagram</li>
+						<li>Your official website, if you have one</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<script src="scripts/pages.js"></script>
+	</div>
+</body>
+</html>

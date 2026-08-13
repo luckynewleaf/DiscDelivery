@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Disc Delivery</title>
+	<title>Past Editions | Disc Delivery</title>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
@@ -26,15 +26,12 @@
 			</nav>
 		</header>
 
-		<main>
-			<section class="hero" aria-label="Disc Delivery hero image space">
-				<div class="hero-photo" role="img" aria-label="Placeholder space for the Disc Delivery hero photo"></div>
+		<main class="archive-page">
+			<section class="archive-intro" aria-labelledby="archive-title">
+				<h1 id="archive-title" class="section-heading page-main-title">Past Editions</h1>
 			</section>
 
-			<section class="intro" aria-label="Disc Delivery intro">
-				<h1>Discover your next favorite artist!</h1>
-				<a class="join-link" href="join-club.html">Join the club</a>
-			</section>
+			<section class="archive-grid" data-archive-grid aria-label="Disc Delivery artist archive"></section>
 		</main>
 
 		<footer class="site-footer site-footer-legal" aria-label="Site footer">
@@ -43,5 +40,17 @@
 			<p class="footer-line footer-copy">© 2026 Disc Delivery</p>
 		</footer>
 	</div>
+
+	<div class="artist-modal" data-artist-modal aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modal-artist-name">
+		<div class="artist-modal-backdrop" data-modal-close></div>
+		<div class="artist-modal-content" role="document">
+			<button class="artist-modal-close" type="button" aria-label="Close artist details" data-modal-close>&times;</button>
+			<div class="artist-modal-body" data-modal-body></div>
+		</div>
+	</div>
+
+	<script src="scripts/editions-data.js"></script>
+	<script src="scripts/edition-components.js"></script>
+	<script src="scripts/archive.js"></script>
 </body>
 </html>
