@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main": {
+      "type": "disc-delivery-shop",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

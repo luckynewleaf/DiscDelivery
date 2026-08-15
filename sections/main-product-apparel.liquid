@@ -1,0 +1,128 @@
+{% liquid
+  assign selected_variant = product.selected_or_first_available_variant
+  assign can_add = selected_variant.available
+  assign availability_label = ''
+  if product.available == false
+    assign availability_label = 'SOLD OUT'
+  endif
+
+  assign size_option_index = 0
+  assign has_size_option = false
+  for option in product.options_with_values
+    assign option_name = option.name | downcase
+    if option_name contains 'size'
+      assign size_option_index = forloop.index0
+      assign has_size_option = true
+    endif
+  endfor
+%}
+
+<main class="new-page product-page">
+  <section class="product-detail">
+    <div class="product-detail-gallery">
+      <div class="gallery product-item-gallery" data-product-media-gallery>
+        {% if product.media.size > 0 %}
+          {% assign first_media = product.media.first %}
+          <img class="item-gallery-main" src="{{ first_media | image_url: width: 1400 }}" alt="{{ first_media.alt | default: product.title | escape }}" data-product-main-image width="1400" height="875">
+          <div class="item-gallery-thumbs-wrap">
+            <button type="button" class="item-thumbs-nav" data-thumb-prev aria-label="Show previous previews"><</button>
+            <div class="item-gallery-thumbs" data-thumb-track>
+              {% for media in product.media %}
+                <button type="button" class="item-gallery-thumb{% if forloop.first %} is-active{% endif %}" data-thumb-button data-image-src="{{ media | image_url: width: 1400 }}" data-image-alt="{{ media.alt | default: product.title | escape }}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}">
+                  {% if media.preview_image %}
+                    <img src="{{ media.preview_image | image_url: width: 220 }}" alt="{{ media.alt | default: product.title | escape }}" loading="lazy" width="220" height="220">
+                  {% else %}
+                    <span>{{ product.title }}</span>
+                  {% endif %}
+                </button>
+              {% endfor %}
+            </div>
+            <button type="button" class="item-thumbs-nav" data-thumb-next aria-label="Show next previews">></button>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="product-detail-copy">
+      <p class="page-kicker">Apparel</p>
+      <h1 class="page-title">{{ product.title }}</h1>
+      <p class="product-detail-price">{{ product.price | money }}</p>
+      {% if availability_label != '' %}
+        <p class="product-availability-label">{{ availability_label }}</p>
+      {% endif %}
+
+      <div class="page-subtitle product-description-body rte">{{ product.description }}</div>
+
+      {% if has_size_option %}
+        <div class="size-picker" data-size-picker>
+          <p class="size-picker-label">Size</p>
+          <div class="size-picker-options" role="radiogroup" aria-label="Choose size">
+            {% assign size_values = product.options_with_values[size_option_index].values %}
+            {% for size_value in size_values %}
+              {% assign first_variant_for_size = blank %}
+              {% assign first_available_variant_for_size = blank %}
+              {% for variant in product.variants %}
+                {% assign current_value = '' %}
+                {% if size_option_index == 0 %}
+                  {% assign current_value = variant.option1 %}
+                {% elsif size_option_index == 1 %}
+                  {% assign current_value = variant.option2 %}
+                {% elsif size_option_index == 2 %}
+                  {% assign current_value = variant.option3 %}
+                {% endif %}
+                {% if current_value == size_value %}
+                  {% if first_variant_for_size == blank %}
+                    {% assign first_variant_for_size = variant %}
+                  {% endif %}
+                  {% if variant.available and first_available_variant_for_size == blank %}
+                    {% assign first_available_variant_for_size = variant %}
+                  {% endif %}
+                {% endif %}
+              {% endfor %}
+
+              {% assign target_variant = first_available_variant_for_size | default: first_variant_for_size %}
+              {% assign sold_out_size = true %}
+              {% if first_available_variant_for_size != blank %}
+                {% assign sold_out_size = false %}
+              {% endif %}
+
+              <button
+                type="button"
+                class="size-picker-option{% if sold_out_size %} is-sold-out{% endif %}{% if selected_variant.id == target_variant.id %} is-active{% endif %}"
+                data-size-option
+                data-variant-id="{{ target_variant.id }}"
+                data-variant-available="{% if sold_out_size %}false{% else %}true{% endif %}"
+                {% if sold_out_size %}disabled aria-disabled="true"{% endif %}
+              >
+                {{ size_value }}
+              </button>
+            {% endfor %}
+          </div>
+          <button type="button" class="size-chart-trigger" data-size-chart-open>Size Chart</button>
+        </div>
+      {% endif %}
+
+      {% form 'product', product, class: 'submit-row product-form', data-product_form: '' %}
+        <input type="hidden" name="id" value="{{ selected_variant.id }}" data-selected-variant>
+        <button type="submit" data-add-to-cart-button {% unless can_add %}disabled aria-disabled="true"{% endunless %}>{% if can_add %}Add to Cart{% else %}Sold Out{% endif %}</button>
+      {% endform %}
+    </div>
+  </section>
+</main>
+
+<div class="disc-modal" data-size-chart-modal hidden aria-hidden="true">
+  <div class="disc-modal-card disc-modal-card--landscape" role="dialog" aria-modal="true" aria-labelledby="size-chart-title">
+    <button class="disc-modal-close" type="button" aria-label="Close size chart" data-size-chart-close>×</button>
+    <h2 id="size-chart-title">Size Chart</h2>
+    <div class="disc-modal-placeholder" role="img" aria-label="Placeholder for size chart content">
+      Placeholder for size-chart image or text content.
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Main Product Apparel",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,92 @@
+<main class="new-page">
+  <section class="section-slab section-slab--plain catalog-section">
+    <div class="shop-header-row">
+      <h2 class="section-heading page-main-title">Shop</h2>
+      <button class="shop-cart-toggle" type="button" aria-label="Open cart" data-shop-cart-toggle>IN YOUR CART (<span data-shop-cart-count>0</span>)</button>
+    </div>
+  </section>
+
+  <section class="shop-shell">
+    <div class="shop-category-toggle" role="tablist" aria-label="Shop categories" data-shop-category-toggle>
+      <button class="shop-category-option is-active" type="button" role="tab" aria-selected="true" data-shop-filter="past-editions">Past Editions</button>
+      <button class="shop-category-option" type="button" role="tab" aria-selected="false" data-shop-filter="apparel">Apparel</button>
+      <button class="shop-category-option" type="button" role="tab" aria-selected="false" data-shop-filter="small-goods">Small Goods</button>
+    </div>
+
+    <section class="shop-category-panel" data-shop-category="past-editions">
+      <div class="product-grid-compact">
+        {% assign past_collection = collections['past-editions'] %}
+        {% if past_collection and past_collection.products_count > 0 %}
+          {% for product in past_collection.products %}
+            {% render 'disc-delivery-product-card', product: product, category: 'past-editions' %}
+          {% endfor %}
+        {% else %}
+          <p class="story-copy">No past editions are currently listed.</p>
+        {% endif %}
+      </div>
+    </section>
+
+    <section class="shop-category-panel" data-shop-category="apparel" hidden>
+      <div class="product-grid-compact">
+        {% assign apparel_collection = collections['apparel'] %}
+        {% if apparel_collection and apparel_collection.products_count > 0 %}
+          {% for product in apparel_collection.products %}
+            {% if product.available %}
+              {% render 'disc-delivery-product-card', product: product, category: 'apparel' %}
+            {% endif %}
+          {% endfor %}
+          {% for product in apparel_collection.products %}
+            {% unless product.available %}
+              {% render 'disc-delivery-product-card', product: product, category: 'apparel' %}
+            {% endunless %}
+          {% endfor %}
+        {% else %}
+          <p class="story-copy">No apparel products are currently listed.</p>
+        {% endif %}
+      </div>
+    </section>
+
+    <section class="shop-category-panel" data-shop-category="small-goods" hidden>
+      <div class="product-grid-compact">
+        {% assign small_goods_collection = collections['small-goods'] %}
+        {% if small_goods_collection and small_goods_collection.products_count > 0 %}
+          {% for product in small_goods_collection.products %}
+            {% if product.available %}
+              {% render 'disc-delivery-product-card', product: product, category: 'small-goods' %}
+            {% endif %}
+          {% endfor %}
+          {% for product in small_goods_collection.products %}
+            {% unless product.available %}
+              {% render 'disc-delivery-product-card', product: product, category: 'small-goods' %}
+            {% endunless %}
+          {% endfor %}
+        {% else %}
+          <p class="story-copy">No small goods are currently listed.</p>
+        {% endif %}
+      </div>
+    </section>
+  </section>
+</main>
+
+<div class="shop-cart-backdrop" data-shop-cart-backdrop hidden></div>
+<aside class="shop-cart-drawer" data-shop-cart-drawer aria-hidden="true" aria-label="Shop cart">
+  <div class="shop-cart-head">
+    <h2>YOUR CART</h2>
+    <button class="shop-cart-close" type="button" aria-label="Close cart" data-shop-cart-close>×</button>
+  </div>
+  <div class="shop-cart-body">
+    <p class="shop-cart-empty" data-shop-cart-empty>Your cart is empty.</p>
+    <ul class="shop-cart-items" data-shop-cart-items></ul>
+  </div>
+  <div class="shop-cart-footer">
+    <p class="shop-cart-total">Total <span data-shop-cart-total>€0.00</span></p>
+    <a class="shop-cart-checkout" href="{{ routes.checkout_url }}" data-shop-cart-checkout>Checkout</a>
+  </div>
+</aside>
+
+{% schema %}
+{
+  "name": "Disc Delivery Shop",
+  "settings": []
+}
+{% endschema %}

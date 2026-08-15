@@ -1,0 +1,43 @@
+{% liquid
+  assign category = category | default: ''
+  assign show_card = true
+  assign badge_text = ''
+
+  if category == 'past-editions'
+    assign total_inventory = 0
+    for variant in product.variants
+      if variant.inventory_management == 'shopify'
+        assign variant_qty = variant.inventory_quantity | at_least: 0
+        assign total_inventory = total_inventory | plus: variant_qty
+      endif
+    endfor
+
+    if total_inventory > 0 and product.available
+      assign badge_text = 'ONLY ' | append: total_inventory | append: ' LEFT IN STOCK'
+      assign show_card = true
+    else
+      assign show_card = false
+    endif
+  elsif product.available == false
+    assign badge_text = 'SOLD OUT'
+  endif
+%}
+
+{% if show_card %}
+  <a class="product-card product-card-link" href="{{ product.url }}" aria-label="View {{ product.title }} details">
+    <div class="media-wrapper">
+      {% if product.featured_media %}
+        <img class="media-placeholder shopify-product-image" src="{{ product.featured_media | image_url: width: 900 }}" alt="{{ product.featured_media.alt | default: product.title | escape }}" loading="lazy" width="900" height="1125">
+      {% else %}
+        <div class="media-placeholder">No image</div>
+      {% endif %}
+      {% if badge_text != '' %}
+        <span class="stock-badge">{{ badge_text }}</span>
+      {% endif %}
+    </div>
+    <div class="product-meta">
+      <p class="product-title">{{ product.title }}</p>
+      <p class="product-price">{{ product.price | money }}</p>
+    </div>
+  </a>
+{% endif %}

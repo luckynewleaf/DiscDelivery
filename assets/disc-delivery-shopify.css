@@ -1,0 +1,23 @@
+.shopify-product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 0.8rem;
+}
+
+.product-form button[disabled],
+.product-form button[aria-disabled="true"] {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.product-description-body ul,
+.product-description-body ol {
+  margin: 0.65rem 0 0.65rem 1.1rem;
+}
+
+.product-description-body p + ul,
+.product-description-body p + ol {
+  margin-top: 0.4rem;
+}

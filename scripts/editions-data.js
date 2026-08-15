@@ -1,4 +1,41 @@
 window.discDeliveryData = {
+	shopifySubscriptionCheckout: {
+		storeUrl: "",
+		subscriptions: {
+			"standard-monthly": {
+				variantId: "",
+				quantity: 1
+			},
+			"standard-three-month": {
+				variantId: "",
+				quantity: 1
+			},
+			"standard-six-month": {
+				variantId: "",
+				quantity: 1
+			},
+			"standard-twelve-month": {
+				variantId: "",
+				quantity: 1
+			},
+			"club-monthly": {
+				variantId: "",
+				quantity: 1
+			},
+			"club-three-month": {
+				variantId: "",
+				quantity: 1
+			},
+			"club-six-month": {
+				variantId: "",
+				quantity: 1
+			},
+			"club-twelve-month": {
+				variantId: "",
+				quantity: 1
+			}
+		}
+	},
 	featuredEditionId: "edition-004",
 	productEditions: {
 		standard: {
@@ -14,14 +51,19 @@ window.discDeliveryData = {
 			],
 			includedItems: [
 				{
-					title: "A signed CD",
+					title: "Signed CD",
 					photoLabel: "Signed CD",
-					description: "A physical CD of this month's featured album, signed by the artist."
+					description: "This month's featured album, personally signed by the artist."
 				},
 				{
-					title: "A collectible artist card",
+					title: "Artist Card",
 					photoLabel: "Artist Card",
-					description: "A collectible card featuring this month's featured artist and the Disc Delivery edition number."
+					description: "A collectible card featuring this month's artist and why I chose them."
+				},
+				{
+					title: "Unique Sticker",
+					photoLabel: "Unique Sticker",
+					description: "One of three stickers created for this month's edition."
 				}
 			],
 			membershipPlans: [
@@ -76,14 +118,24 @@ window.discDeliveryData = {
 			],
 			includedItems: [
 				{
-					title: "Standard Edition",
-					photoLabel: "Standard Edition",
-					description: "Includes everything in Standard Edition: a signed CD and a collectible artist card."
+					title: "Signed CD",
+					photoLabel: "Signed CD",
+					description: "This month's featured album, personally signed by the artist."
 				},
 				{
-					title: "An exclusive Disc Delivery Art print",
-					photoLabel: "Art Print",
-					description: "A custom-designed physical art print created exclusively for this month's Disc Delivery edition."
+					title: "Artist Card",
+					photoLabel: "Artist Card",
+					description: "A collectible card featuring this month's artist and why I chose them."
+				},
+				{
+					title: "Unique Sticker Set",
+					photoLabel: "Sticker Set",
+					description: "The complete sticker set created for this month's edition."
+				},
+				{
+					title: "<em>DELIVERED</em>",
+					photoLabel: "DELIVERED",
+					description: "This month's issue of the Disc Delivery zine."
 				}
 			],
 			membershipPlans: [

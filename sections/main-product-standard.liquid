@@ -1,0 +1,81 @@
+{% liquid
+  assign is_past_edition = false
+  for c in product.collections
+    if c.handle == 'past-editions'
+      assign is_past_edition = true
+    endif
+  endfor
+
+  assign total_inventory = 0
+  for variant in product.variants
+    if variant.inventory_management == 'shopify'
+      assign variant_qty = variant.inventory_quantity | at_least: 0
+      assign total_inventory = total_inventory | plus: variant_qty
+    endif
+  endfor
+
+  assign can_add = product.selected_or_first_available_variant.available
+  assign availability_label = ''
+
+  if is_past_edition
+    if total_inventory > 0 and product.available
+      assign availability_label = 'ONLY ' | append: total_inventory | append: ' LEFT IN STOCK'
+      assign can_add = true
+    else
+      assign availability_label = 'UNAVAILABLE'
+      assign can_add = false
+    endif
+  elsif product.available == false
+    assign availability_label = 'SOLD OUT'
+    assign can_add = false
+  endif
+%}
+
+<main class="new-page product-page">
+  <section class="product-detail">
+    <div class="product-detail-gallery">
+      <div class="gallery product-item-gallery" data-product-media-gallery>
+        {% if product.media.size > 0 %}
+          {% assign first_media = product.media.first %}
+          <img class="item-gallery-main" src="{{ first_media | image_url: width: 1400 }}" alt="{{ first_media.alt | default: product.title | escape }}" data-product-main-image width="1400" height="875">
+          <div class="item-gallery-thumbs-wrap">
+            <button type="button" class="item-thumbs-nav" data-thumb-prev aria-label="Show previous previews"><</button>
+            <div class="item-gallery-thumbs" data-thumb-track>
+              {% for media in product.media %}
+                <button type="button" class="item-gallery-thumb{% if forloop.first %} is-active{% endif %}" data-thumb-button data-image-src="{{ media | image_url: width: 1400 }}" data-image-alt="{{ media.alt | default: product.title | escape }}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}">
+                  {% if media.preview_image %}
+                    <img src="{{ media.preview_image | image_url: width: 220 }}" alt="{{ media.alt | default: product.title | escape }}" loading="lazy" width="220" height="220">
+                  {% else %}
+                    <span>{{ product.title }}</span>
+                  {% endif %}
+                </button>
+              {% endfor %}
+            </div>
+            <button type="button" class="item-thumbs-nav" data-thumb-next aria-label="Show next previews">></button>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="product-detail-copy">
+      <p class="page-kicker">{% if is_past_edition %}Past Edition{% else %}Product{% endif %}</p>
+      <h1 class="page-title">{{ product.title }}</h1>
+      <p class="product-detail-price">{{ product.price | money }}</p>
+      {% if availability_label != '' %}
+        <p class="product-availability-label">{{ availability_label }}</p>
+      {% endif %}
+      <div class="page-subtitle product-description-body rte">{{ product.description }}</div>
+      {% form 'product', product, class: 'submit-row product-form' %}
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        <button type="submit" {% unless can_add %}disabled aria-disabled="true"{% endunless %}>{% if can_add %}Add to Cart{% else %}Unavailable{% endif %}</button>
+      {% endform %}
+    </div>
+  </section>
+</main>
+
+{% schema %}
+{
+  "name": "Main Product Standard",
+  "settings": []
+}
+{% endschema %}

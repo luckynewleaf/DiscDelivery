@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{{ page_title }}{% if current_tags %} - {{ current_tags | join: ', ' }}{% endif %}{% if current_page != 1 %} - Page {{ current_page }}{% endif %}{% unless page_title contains shop.name %} - {{ shop.name }}{% endunless %}</title>
+  {{ content_for_header }}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+  {{ 'disc-delivery-base.css' | asset_url | stylesheet_tag }}
+  {{ 'disc-delivery-shopify.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'disc-delivery-shopify.js' | asset_url }}" defer></script>
+</head>
+<body>
+  <div class="page">
+    <header class="site-header">
+      <a class="logo-link" href="{{ routes.root_url }}" aria-label="Disc Delivery home">
+        <img class="logo-image" src="{{ 'DiscDelivery_Logo_White.png' | asset_url }}" alt="Disc Delivery">
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <ul>
+          <li><a href="/pages/join-club">Join The Club</a></li>
+          <li><a href="/pages/shop">Shop</a></li>
+          <li><a href="/pages/about">About</a></li>
+          <li><a href="/pages/contact">Contact</a></li>
+          <li><a href="{{ routes.account_url }}">Account</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    {{ content_for_layout }}
+
+    <footer class="site-footer site-footer-legal" aria-label="Site footer">
+      <p class="footer-line footer-brand">Disc Delivery</p>
+      <p class="footer-line footer-links"><a href="/pages/privacy-policy">Privacy Policy</a><span aria-hidden="true">·</span><a href="/pages/terms-of-service">Terms of Service</a></p>
+      <p class="footer-line footer-copy">© {{ 'now' | date: '%Y' }} Disc Delivery</p>
+    </footer>
+  </div>
+</body>
+</html>

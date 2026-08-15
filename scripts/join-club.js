@@ -29,6 +29,40 @@
 		return productEditions.standard || null;
 	}
 
+	function normalizeStoreUrl(url) {
+		if (!url) {
+			return "";
+		}
+		return String(url).replace(/\/+$/, "");
+	}
+
+	function getShopifyCheckoutUrlForPlan(plan) {
+		if (!plan || !plan.id) {
+			return "";
+		}
+
+		const checkoutConfig = data.shopifySubscriptionCheckout || {};
+		const storeUrl = normalizeStoreUrl(checkoutConfig.storeUrl);
+		const subscriptions = checkoutConfig.subscriptions || {};
+		const subscription = subscriptions[plan.id] || {};
+		const variantId = String(subscription.variantId || "").trim();
+		const quantity = Number(subscription.quantity) > 0 ? Number(subscription.quantity) : 1;
+
+		if (!storeUrl || !variantId) {
+			return "";
+		}
+
+		return storeUrl + "/cart/" + encodeURIComponent(variantId) + ":" + quantity + "?checkout";
+	}
+
+	function resolvePlanCheckoutUrl(plan) {
+		const shopifyCheckoutUrl = getShopifyCheckoutUrlForPlan(plan);
+		if (shopifyCheckoutUrl) {
+			return shopifyCheckoutUrl;
+		}
+		return plan.checkoutUrl || "#";
+	}
+
 	function renderPlans(plans) {
 		if (!plansRoot) {
 			return;
@@ -38,6 +72,7 @@
 
 		plansRoot.innerHTML = membershipPlans
 			.map(function (plan) {
+				const checkoutUrl = resolvePlanCheckoutUrl(plan);
 				const badge = plan.saving ? "<p class=\"saving-badge\">" + plan.saving + "</p>" : "<p class=\"saving-badge-empty\"></p>";
 				const subprice = plan.subprice ? "<p class=\"subprice\">" + plan.subprice + "</p>" : "<p class=\"subprice\"></p>";
 				const description = plan.description ? "<p class=\"plan-description\">" + plan.description + "</p>" : "<p class=\"plan-description\"></p>";
@@ -50,7 +85,7 @@
 					"<p class=\"price\">" + plan.price + "</p>",
 					description,
 					subprice,
-					"<a class=\"select-button\" href=\"" + plan.checkoutUrl + "\">Select</a>",
+					"<a class=\"select-button\" href=\"" + checkoutUrl + "\">Buy</a>",
 					"</article>"
 				].join("");
 			})
@@ -79,6 +114,101 @@
 			.join("");
 	}
 
+	function renderEditionGallery(slides) {
+		if (!galleryRoot) {
+			return;
+		}
+
+		const gallerySlides = Array.isArray(slides) ? slides : [];
+		if (!gallerySlides.length) {
+			galleryRoot.innerHTML = "";
+			return;
+		}
+
+		let activeIndex = 0;
+		let startIndex = 0;
+		const thumbsPerPage = 4;
+
+		galleryRoot.innerHTML = [
+			"<div class=\"edition-preview-main\" role=\"img\" aria-live=\"polite\"></div>",
+			"<div class=\"edition-preview-thumbs-wrap\">",
+			"<button type=\"button\" class=\"edition-preview-nav\" data-edition-thumb-prev aria-label=\"Show previous previews\"><</button>",
+			"<div class=\"edition-preview-thumbs\" data-edition-thumb-track></div>",
+			"<button type=\"button\" class=\"edition-preview-nav\" data-edition-thumb-next aria-label=\"Show next previews\">></button>",
+			"</div>"
+		].join("");
+
+		const main = galleryRoot.querySelector(".edition-preview-main");
+		const thumbsRoot = galleryRoot.querySelector("[data-edition-thumb-track]");
+		const prevButton = galleryRoot.querySelector("[data-edition-thumb-prev]");
+		const nextButton = galleryRoot.querySelector("[data-edition-thumb-next]");
+
+		if (!main || !thumbsRoot || !prevButton || !nextButton) {
+			return;
+		}
+
+		function renderMain() {
+			const slide = gallerySlides[activeIndex];
+			main.textContent = slide.label;
+			main.setAttribute("aria-label", slide.label);
+		}
+
+		function renderThumbs() {
+			thumbsRoot.innerHTML = "";
+			const visibleSlides = gallerySlides.slice(startIndex, startIndex + thumbsPerPage);
+
+			visibleSlides.forEach(function (slide, offset) {
+				const realIndex = startIndex + offset;
+				const button = document.createElement("button");
+				button.type = "button";
+				button.className = "edition-preview-thumb";
+				button.setAttribute("aria-label", "Show " + slide.label);
+				button.setAttribute("aria-selected", realIndex === activeIndex ? "true" : "false");
+				button.textContent = slide.label;
+
+				button.addEventListener("click", function () {
+					activeIndex = realIndex;
+					renderMain();
+					renderThumbs();
+				});
+
+				thumbsRoot.appendChild(button);
+			});
+
+			const hasOverflow = gallerySlides.length > thumbsPerPage;
+			prevButton.classList.toggle("is-hidden", !hasOverflow);
+			nextButton.classList.toggle("is-hidden", !hasOverflow);
+
+			if (!hasOverflow) {
+				return;
+			}
+
+			prevButton.disabled = startIndex <= 0;
+			nextButton.disabled = startIndex + thumbsPerPage >= gallerySlides.length;
+			prevButton.classList.toggle("is-disabled", prevButton.disabled);
+			nextButton.classList.toggle("is-disabled", nextButton.disabled);
+		}
+
+		prevButton.addEventListener("click", function () {
+			if (startIndex <= 0) {
+				return;
+			}
+			startIndex = Math.max(0, startIndex - thumbsPerPage);
+			renderThumbs();
+		});
+
+		nextButton.addEventListener("click", function () {
+			if (startIndex + thumbsPerPage >= gallerySlides.length) {
+				return;
+			}
+			startIndex = Math.min(gallerySlides.length - thumbsPerPage, startIndex + thumbsPerPage);
+			renderThumbs();
+		});
+
+		renderMain();
+		renderThumbs();
+	}
+
 	function activateEdition(editionKey) {
 		const editionConfig = getEditionConfig(editionKey);
 		if (!editionConfig) {
@@ -101,7 +231,7 @@
 
 		renderIncludedItems(editionConfig.includedItems);
 		renderPlans(editionConfig.membershipPlans);
-		components.initGallery(galleryRoot, editionConfig.gallerySlides);
+		renderEditionGallery(editionConfig.gallerySlides);
 	}
 
 	function renderFeaturedEdition(edition) {

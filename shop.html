@@ -21,13 +21,17 @@
 					<li><a href="shop.html" aria-current="page">Shop</a></li>
 					<li><a href="about.html">About</a></li>
 					<li><a href="contact.html">Contact</a></li>
+					<li><a href="/account">Account</a></li>
 				</ul>
 			</nav>
 		</header>
 
 		<main class="new-page">
 			<section class="section-slab section-slab--plain catalog-section">
-				<h2 class="section-heading page-main-title">Shop</h2>
+				<div class="shop-header-row">
+					<h2 class="section-heading page-main-title">Shop</h2>
+					<button class="shop-cart-toggle" type="button" aria-label="Open cart" data-shop-cart-toggle>In Your Cart (<span data-shop-cart-count>0</span>)</button>
+				</div>
 			</section>
 
 			<section class="shop-shell">
@@ -38,130 +42,35 @@
 					</div>
 
 					<section class="shop-category-panel" data-shop-category="past-editions">
-					<div class="product-grid-compact">
-						<a class="product-card product-card-link" href="shop/edition-004.html" aria-label="View Elia Marlowe - Edition 004 details">
-							<div class="media-wrapper">
-								<div class="media-placeholder">Edition 004 Image</div>
-								<span class="stock-badge">Only 8 left in stock</span>
-							</div>
-							<div class="product-meta">
-								<p class="product-title">Elia Marlowe - Edition 004</p>
-								<p class="product-price">€29.99</p>
-							</div>
-						</a>
-						<article class="product-card">
-							<div class="media-wrapper">
-								<div class="media-placeholder">Edition 003 Image</div>
-								<span class="stock-badge">Sold Out</span>
-							</div>
-							<div class="product-meta">
-								<p class="product-title">Mira Fen - Edition 003</p>
-								<p class="product-price">€29.99</p>
-							</div>
-						</article>
-						<article class="product-card">
-							<div class="media-wrapper">
-								<div class="media-placeholder">Edition 002 Image</div>
-								<span class="stock-badge">Only 3 left in stock</span>
-							</div>
-							<div class="product-meta">
-								<p class="product-title">Noor Vale - Edition 002</p>
-								<p class="product-price">€29.99</p>
-							</div>
-						</article>
-						<article class="product-card">
-							<div class="media-wrapper">
-								<div class="media-placeholder">Edition 001 Image</div>
-								<span class="stock-badge">Sold Out</span>
-							</div>
-							<div class="product-meta">
-								<p class="product-title">Rina Sol - Edition 001</p>
-								<p class="product-price">€29.99</p>
-							</div>
-						</article>
-						<article class="product-card">
-							<div class="media-wrapper">
-								<div class="media-placeholder">Edition 005 Image</div>
-								<span class="stock-badge">Only 5 left in stock</span>
-							</div>
-							<div class="product-meta">
-								<p class="product-title">Nova Aire - Edition 005</p>
-								<p class="product-price">€29.99</p>
-							</div>
-						</article>
-						<article class="product-card">
-							<div class="media-wrapper">
-								<div class="media-placeholder">Edition 006 Image</div>
-								<span class="stock-badge">Only 2 left in stock</span>
-							</div>
-							<div class="product-meta">
-								<p class="product-title">Kite & Echo - Edition 006</p>
-								<p class="product-price">€29.99</p>
-							</div>
-						</article>
-					</div>
+					<div class="product-grid-compact" data-shop-grid="past-editions"></div>
 					</section>
 
 					<section class="shop-category-panel" data-shop-category="apparel" hidden>
-					<div class="product-grid-compact">
-						<article class="product-card">
-							<div class="media-wrapper"><div class="media-placeholder">T-Shirt Placeholder</div></div>
-							<div class="product-meta"><p class="product-title">Disc Delivery T-Shirt</p><p class="product-price">€34.00</p></div>
-						</article>
-						<article class="product-card">
-							<div class="media-wrapper"><div class="media-placeholder">Tote Bag Placeholder</div></div>
-							<div class="product-meta"><p class="product-title">Disc Delivery Tote</p><p class="product-price">€22.00</p></div>
-						</article>
-						<article class="product-card">
-							<div class="media-wrapper"><div class="media-placeholder">Hoodie Placeholder</div></div>
-							<div class="product-meta"><p class="product-title">Disc Delivery Hoodie</p><p class="product-price">€58.00</p></div>
-						</article>
-						<article class="product-card">
-							<div class="media-wrapper"><div class="media-placeholder">Long Sleeve Placeholder</div></div>
-							<div class="product-meta"><p class="product-title">Disc Delivery Long Sleeve</p><p class="product-price">€42.00</p></div>
-						</article>
-						<article class="product-card">
-							<div class="media-wrapper"><div class="media-placeholder">Cap Placeholder</div></div>
-							<div class="product-meta"><p class="product-title">Disc Delivery Cap</p><p class="product-price">€24.00</p></div>
-						</article>
-						<article class="product-card">
-							<div class="media-wrapper"><div class="media-placeholder">Crewneck Placeholder</div></div>
-							<div class="product-meta"><p class="product-title">Disc Delivery Crewneck</p><p class="product-price">€52.00</p></div>
-						</article>
-					</div>
+					<div class="product-grid-compact" data-shop-grid="apparel"></div>
 					</section>
 
 					<section class="shop-category-panel" data-shop-category="small-goods" hidden>
-					<div class="product-grid-compact">
-						<article class="product-card">
-							<div class="media-wrapper"><div class="media-placeholder">Sticker Set Placeholder</div></div>
-							<div class="product-meta"><p class="product-title">Disc Delivery Sticker Set</p><p class="product-price">€8.00</p></div>
-						</article>
-						<article class="product-card">
-							<div class="media-wrapper"><div class="media-placeholder">Pin Placeholder</div></div>
-							<div class="product-meta"><p class="product-title">Disc Delivery Pin</p><p class="product-price">€10.00</p></div>
-						</article>
-						<article class="product-card">
-							<div class="media-wrapper"><div class="media-placeholder">Accessory Placeholder</div></div>
-							<div class="product-meta"><p class="product-title">Disc Delivery Accessory</p><p class="product-price">€14.00</p></div>
-						</article>
-						<article class="product-card">
-							<div class="media-wrapper"><div class="media-placeholder">Button Pack Placeholder</div></div>
-							<div class="product-meta"><p class="product-title">Disc Delivery Button Pack</p><p class="product-price">€9.00</p></div>
-						</article>
-						<article class="product-card">
-							<div class="media-wrapper"><div class="media-placeholder">Postcard Set Placeholder</div></div>
-							<div class="product-meta"><p class="product-title">Disc Delivery Postcard Set</p><p class="product-price">€12.00</p></div>
-						</article>
-						<article class="product-card">
-							<div class="media-wrapper"><div class="media-placeholder">Keychain Placeholder</div></div>
-							<div class="product-meta"><p class="product-title">Disc Delivery Keychain</p><p class="product-price">€11.00</p></div>
-						</article>
-					</div>
+					<div class="product-grid-compact" data-shop-grid="small-goods"></div>
 					</section>
 				</div>
 			</section>
 		</main>
+
+		<div class="shop-cart-backdrop" data-shop-cart-backdrop hidden></div>
+		<aside class="shop-cart-drawer" data-shop-cart-drawer aria-hidden="true" aria-label="Shop cart">
+			<div class="shop-cart-head">
+				<h2>Your Cart</h2>
+				<button class="shop-cart-close" type="button" aria-label="Close cart" data-shop-cart-close>×</button>
+			</div>
+			<div class="shop-cart-body">
+				<p class="shop-cart-empty" data-shop-cart-empty>Your cart is empty.</p>
+				<ul class="shop-cart-items" data-shop-cart-items></ul>
+			</div>
+			<div class="shop-cart-footer">
+				<p class="shop-cart-total">Total <span data-shop-cart-total>€0.00</span></p>
+				<a class="shop-cart-checkout" href="/checkout" data-shop-cart-checkout>Checkout</a>
+			</div>
+		</aside>
 
 		<footer class="site-footer site-footer-legal" aria-label="Site footer">
 			<p class="footer-line footer-brand">Disc Delivery</p>
