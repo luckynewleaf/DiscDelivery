@@ -9,7 +9,7 @@
 	const plansRoot = document.querySelector("[data-membership-plans]");
 	const productTitle = document.querySelector("[data-product-title]");
 	const productDescription = document.querySelector("[data-product-description]");
-	const includedItemsRoot = document.querySelector("[data-included-items]");
+	const includedItems = Array.from(document.querySelectorAll("[data-included-edition]"));
 	const editionToggleRoot = document.querySelector("[data-edition-toggle]");
 	const editionButtons = editionToggleRoot ? Array.from(editionToggleRoot.querySelectorAll("[data-product-edition]")) : [];
 	const recentRoot = document.querySelector("[data-recent-editions]");
@@ -63,6 +63,12 @@
 		return plan.checkoutUrl || "#";
 	}
 
+	function showIncludedEdition(editionKey) {
+		includedItems.forEach(function (item) {
+			item.hidden = item.dataset.includedEdition !== editionKey;
+		});
+	}
+
 	function renderPlans(plans) {
 		if (!plansRoot) {
 			return;
@@ -87,28 +93,6 @@
 					subprice,
 					"<a class=\"select-button\" href=\"" + checkoutUrl + "\">Buy</a>",
 					"</article>"
-				].join("");
-			})
-			.join("");
-	}
-
-	function renderIncludedItems(items) {
-		if (!includedItemsRoot) {
-			return;
-		}
-
-		includedItemsRoot.innerHTML = (items || [])
-			.map(function (item) {
-				const photoLabel = item.photoLabel || item.title;
-				const description = item.description || "";
-				return [
-					"<li class=\"included-item\">",
-					"<div class=\"included-photo\" role=\"img\" aria-label=\"" + photoLabel + "\">" + photoLabel + "</div>",
-					"<div class=\"included-copy\">",
-					"<strong>" + item.title + "</strong>",
-					description ? "<p>" + description + "</p>" : "",
-					"</div>",
-					"</li>"
 				].join("");
 			})
 			.join("");
@@ -229,7 +213,7 @@
 			productDescription.textContent = editionConfig.description;
 		}
 
-		renderIncludedItems(editionConfig.includedItems);
+		showIncludedEdition(activeEditionKey);
 		renderPlans(editionConfig.membershipPlans);
 		renderEditionGallery(editionConfig.gallerySlides);
 	}
