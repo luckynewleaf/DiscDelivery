@@ -18,7 +18,8 @@
 	grid.innerHTML = editions
 		.map(function (edition) {
 			const isFeatured = edition.id === data.featuredEditionId;
-			const featuredBadge = isFeatured ? "<span class=\"archive-featured-badge\">This Month</span>" : "";
+			const runtime = window.discDeliveryContent && window.discDeliveryContent.common && window.discDeliveryContent.common.runtime || {};
+			const featuredBadge = isFeatured ? "<span class=\"archive-featured-badge\">" + (runtime.thisMonth || "This Month") + "</span>" : "";
 			return [
 				"<button class=\"archive-item" + (isFeatured ? " is-featured" : "") + "\" type=\"button\" data-edition-id=\"" + edition.id + "\">",
 				"<span class=\"archive-portrait-wrap\">",

@@ -9,7 +9,7 @@
 	<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="styles/style.css">
 </head>
-<body>
+<body data-content-page="joinClub">
 	<div class="page">
 		<header class="site-header">
 			<a class="logo-link" href="index.html" aria-label="Disc Delivery home">
@@ -74,7 +74,6 @@
 					<button class="folder-tab is-active" type="button" role="tab" id="folder-tab-how" aria-selected="true" aria-controls="folder-panel-how" data-folder-tab="how">How It Works</button>
 					<button class="folder-tab" type="button" role="tab" id="folder-tab-who" aria-selected="false" aria-controls="folder-panel-who" data-folder-tab="who">Who Do We Choose?</button>
 					<button class="folder-tab" type="button" role="tab" id="folder-tab-artist" aria-selected="false" aria-controls="folder-panel-artist" data-folder-tab="artist">This Month&apos;s Artist</button>
-					<button class="folder-tab" type="button" role="tab" id="folder-tab-recent" aria-selected="false" aria-controls="folder-panel-recent" data-folder-tab="recent">Recent Editions</button>
 				</div>
 
 				<div class="folder-panel-frame">
@@ -113,23 +112,16 @@
 							<div class="featured-panel" data-featured-panel>
 								<button class="select-button reveal-button" type="button" data-reveal-artist>Click to reveal this month&apos;s artist.</button>
 								<div class="featured-content" data-featured-content hidden></div>
+								<a class="archive-link artist-archive-link" href="past-editions.html">View all past editions</a>
 							</div>
 						</div>
-					</section>
-
-					<section class="folder-panel" id="folder-panel-recent" role="tabpanel" aria-labelledby="folder-tab-recent" data-folder-panel="recent" hidden>
-						<div class="panel-row-header">
-							<h2>Recent Editions</h2>
-							<a class="archive-link" href="past-editions.html">View all past editions</a>
-						</div>
-						<div class="recent-grid" data-recent-editions></div>
 					</section>
 				</div>
 			</section>
 
 			<section class="section faq" aria-labelledby="faq-title">
 				<h2 id="faq-title">FAQ</h2>
-				<div class="faq-list">
+					<div class="faq-list" data-content-faq>
 					<details>
 						<summary>How does the Disc Delivery Club work?</summary>
 						<p>You subscribe, we reveal the monthly artist before deadline, and we ship your mystery album edition after the window closes.</p>
@@ -189,6 +181,8 @@
 		</div>
 	</div>
 
+	<script src="scripts/site-content.js"></script>
+	<script src="scripts/content-loader.js"></script>
 	<script src="scripts/editions-data.js"></script>
 	<script src="scripts/edition-components.js"></script>
 	<script src="scripts/join-club.js"></script>

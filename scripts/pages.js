@@ -84,6 +84,7 @@
 			return;
 		}
 
+		const runtime = window.discDeliveryContent && window.discDeliveryContent.common && window.discDeliveryContent.common.runtime || {};
 		const slides = [
 			{ label: "Edition 004 Cover", caption: "Edition 004 Cover" },
 			{ label: "Edition 004 Box", caption: "Edition 004 Box" },
@@ -97,9 +98,9 @@
 		galleryRoot.innerHTML = [
 			"<div class=\"item-gallery-main\" role=\"img\" aria-live=\"polite\"></div>",
 			"<div class=\"item-gallery-thumbs-wrap\">",
-			"<button type=\"button\" class=\"item-thumbs-nav\" data-item-thumbs-prev aria-label=\"Show previous previews\"><</button>",
+			"<button type=\"button\" class=\"item-thumbs-nav\" data-item-thumbs-prev aria-label=\"" + (runtime.previousPreviews || "Show previous previews") + "\"><</button>",
 			"<div class=\"item-gallery-thumbs\" data-item-thumbs></div>",
-			"<button type=\"button\" class=\"item-thumbs-nav\" data-item-thumbs-next aria-label=\"Show next previews\">></button>",
+			"<button type=\"button\" class=\"item-thumbs-nav\" data-item-thumbs-next aria-label=\"" + (runtime.nextPreviews || "Show next previews") + "\">></button>",
 			"</div>"
 		].join("");
 
@@ -186,6 +187,10 @@
 		const emptyState = document.querySelector("[data-shop-cart-empty]");
 		const totalNode = document.querySelector("[data-shop-cart-total]");
 		const checkoutLink = document.querySelector("[data-shop-cart-checkout]");
+		function runtimeCopy(key, fallback) {
+			const runtime = window.discDeliveryContent && window.discDeliveryContent.common && window.discDeliveryContent.common.runtime;
+			return runtime && runtime[key] ? runtime[key] : fallback;
+		}
 
 		if (!drawer || !backdrop || !closeButton || !itemsRoot || !emptyState || !totalNode || !checkoutLink) {
 			return;
@@ -225,7 +230,7 @@
 			setCount(0);
 			itemsRoot.innerHTML = "";
 			emptyState.hidden = false;
-			emptyState.textContent = "Cart preview unavailable outside Shopify storefront.";
+			emptyState.textContent = runtimeCopy("cartUnavailable", "Cart preview unavailable outside Shopify storefront.");
 			totalNode.textContent = "--";
 		}
 
@@ -247,7 +252,7 @@
 				const variantTitle = item.variant_title && item.variant_title !== "Default Title" ? item.variant_title : "";
 				const imageMarkup = item.image
 					? "<img src=\"" + item.image + "\" alt=\"" + item.product_title + "\">"
-					: "<span class=\"shop-cart-image-fallback\">No image</span>";
+					: "<span class=\"shop-cart-image-fallback\">" + runtimeCopy("noImage", "No image") + "</span>";
 
 				const itemMarkup = [
 					"<li class=\"shop-cart-item\">",
@@ -257,10 +262,10 @@
 					variantTitle ? "<p class=\"shop-cart-item-variant\">" + variantTitle + "</p>" : "",
 					"<p class=\"shop-cart-item-price\">" + formatMoney(item.final_line_price, currencyCode) + "</p>",
 					"<div class=\"shop-cart-item-controls\">",
-					"<button type=\"button\" class=\"shop-cart-qty\" data-cart-action=\"decrement\" data-cart-line=\"" + line + "\" data-cart-quantity=\"" + item.quantity + "\" aria-label=\"Decrease quantity\">-</button>",
+					"<button type=\"button\" class=\"shop-cart-qty\" data-cart-action=\"decrement\" data-cart-line=\"" + line + "\" data-cart-quantity=\"" + item.quantity + "\" aria-label=\"" + runtimeCopy("decreaseQuantity", "Decrease quantity") + "\">-</button>",
 					"<span class=\"shop-cart-qty-value\">" + item.quantity + "</span>",
-					"<button type=\"button\" class=\"shop-cart-qty\" data-cart-action=\"increment\" data-cart-line=\"" + line + "\" data-cart-quantity=\"" + item.quantity + "\" aria-label=\"Increase quantity\">+</button>",
-					"<button type=\"button\" class=\"shop-cart-remove\" data-cart-action=\"remove\" data-cart-line=\"" + line + "\" aria-label=\"Remove item\">Remove</button>",
+					"<button type=\"button\" class=\"shop-cart-qty\" data-cart-action=\"increment\" data-cart-line=\"" + line + "\" data-cart-quantity=\"" + item.quantity + "\" aria-label=\"" + runtimeCopy("increaseQuantity", "Increase quantity") + "\">+</button>",
+					"<button type=\"button\" class=\"shop-cart-remove\" data-cart-action=\"remove\" data-cart-line=\"" + line + "\" aria-label=\"" + runtimeCopy("removeItem", "Remove") + "\">" + runtimeCopy("removeItem", "Remove") + "</button>",
 					"</div>",
 					"</div>",
 					"</li>"

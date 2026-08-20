@@ -94,3 +94,54 @@ window.discDeliveryData = {
 		{ id: "edition-001", artistName: "Artist Placeholder 001", monthYear: "May 2026", editionCode: "Edition 001", albumTitle: "Album Placeholder 001", description: "Our first edition introduced a distinctive songwriter with direct lyrics and wide-open arrangements.", musicalIdentity: "Emerging independent artist with folk-inflected alternative sound.", whySelected: "Chosen for songwriting depth and a debut record with strong emotional pull.", websiteUrl: "#", instagramUrl: "#", appleMusicUrl: "#", spotifyUrl: "#", portraitLabel: "Artist Portrait 001", albumLabel: "Album Artwork 001", boxImages: ["Edition Box 001", "Signed CD 001", "Artist Card 001"] }
 	]
 };
+
+(function () {
+	const editorial = window.discDeliveryContent && window.discDeliveryContent.editions;
+	if (!editorial || !editorial.productEditions) {
+		return;
+	}
+	Object.keys(editorial.productEditions).forEach(function (key) {
+		const source = editorial.productEditions[key];
+		const target = window.discDeliveryData.productEditions[key];
+		if (!source || !target) {
+			return;
+		}
+		["title", "description"].forEach(function (property) {
+			if (source[property] !== undefined) target[property] = source[property];
+		});
+		if (Array.isArray(source.gallerySlides)) {
+			target.gallerySlides = source.gallerySlides.map(function (slide) {
+				return typeof slide === "string" ? { label: slide, caption: slide } : { label: slide.label, caption: slide.label, image: slide.image || "" };
+			});
+		}
+		if (Array.isArray(source.includedItems)) {
+			target.includedItems = source.includedItems.map(function (item, index) {
+				return Object.assign({}, target.includedItems[index] || {}, item, { id: (target.includedItems[index] && target.includedItems[index].id) || key + "-included-" + index, fullSrc: item.thumbSrc });
+			});
+		}
+	});
+	const includedItems = window.discDeliveryContent.pages && window.discDeliveryContent.pages.included && window.discDeliveryContent.pages.included.items || [];
+	Object.keys(window.discDeliveryData.productEditions).forEach(function (key) {
+		window.discDeliveryData.productEditions[key].includedItems.forEach(function (item, index) {
+			const matching = includedItems.find(function (included) { return item.name.indexOf(included.title) !== -1 || included.title.indexOf(item.name) !== -1; }) || includedItems[index];
+			if (matching) {
+				item.name = matching.title;
+				item.thumbSrc = matching.image.src;
+				item.fullSrc = matching.image.src;
+			}
+		});
+	});
+	const artist = window.discDeliveryContent.pages && window.discDeliveryContent.pages.joinClub && window.discDeliveryContent.pages.joinClub.panels && window.discDeliveryContent.pages.joinClub.panels[2] && window.discDeliveryContent.pages.joinClub.panels[2].artist;
+	const featured = window.discDeliveryData.editions.find(function (edition) { return edition.id === window.discDeliveryData.featuredEditionId; });
+	if (artist && featured) {
+		featured.artistName = artist.name;
+		featured.monthYear = artist.monthYear;
+		featured.editionCode = artist.editionNumber;
+		featured.description = artist.description;
+		featured.portraitLabel = artist.image && artist.image.alt ? artist.image.alt : featured.portraitLabel;
+		featured.websiteUrl = artist.links.website.enabled ? artist.links.website.url : "";
+		featured.instagramUrl = artist.links.instagram.enabled ? artist.links.instagram.url : "";
+		featured.appleMusicUrl = artist.links.appleMusic.enabled ? artist.links.appleMusic.url : "";
+		featured.spotifyUrl = artist.links.spotify.enabled ? artist.links.spotify.url : "";
+	}
+})();

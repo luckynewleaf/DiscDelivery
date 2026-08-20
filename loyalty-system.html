@@ -9,7 +9,7 @@
 	<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="styles/style.css">
 </head>
-<body>
+<body data-content-page="loyalty">
 	<div class="page">
 		<header class="site-header">
 			<a class="logo-link" href="index.html" aria-label="Disc Delivery home">
@@ -37,7 +37,7 @@
 					<p class="loyalty-note">The price shown for each month below is the price paid for that month&apos;s delivery. After month 12, the month 12+ price becomes your ongoing monthly price while your subscription remains active.</p>
 				</div>
 
-				<div class="loyalty-tables" aria-label="Loyalty pricing tables">
+				<div class="loyalty-tables" aria-label="Loyalty pricing tables" data-content-loyalty-tables>
 					<article class="loyalty-table-card">
 						<h3>Standard Edition</h3>
 						<table class="loyalty-table">
@@ -87,5 +87,7 @@
 			<p class="footer-line footer-copy">© 2026 Disc Delivery</p>
 		</footer>
 	</div>
+	<script src="scripts/site-content.js"></script>
+	<script src="scripts/content-loader.js"></script>
 </body>
 </html>

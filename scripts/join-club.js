@@ -5,6 +5,10 @@
 	}
 
 	const data = components.getData();
+	const runtime = window.discDeliveryContent && window.discDeliveryContent.common && window.discDeliveryContent.common.runtime || {};
+	function runtimeLabel(key, fallback) {
+		return runtime[key] || fallback;
+	}
 	const galleryRoot = document.querySelector("[data-gallery]");
 	const productTitle = document.querySelector("[data-product-title]");
 	const productDescription = document.querySelector("[data-product-description]");
@@ -181,9 +185,9 @@
 		galleryRoot.innerHTML = [
 			"<div class=\"edition-preview-main\" role=\"img\" aria-live=\"polite\"></div>",
 			"<div class=\"edition-preview-thumbs-wrap\">",
-			"<button type=\"button\" class=\"edition-preview-nav\" data-edition-thumb-prev aria-label=\"Show previous previews\"><</button>",
+			"<button type=\"button\" class=\"edition-preview-nav\" data-edition-thumb-prev aria-label=\"" + runtimeLabel("previousPreviews", "Show previous previews") + "\"><</button>",
 			"<div class=\"edition-preview-thumbs\" data-edition-thumb-track></div>",
-			"<button type=\"button\" class=\"edition-preview-nav\" data-edition-thumb-next aria-label=\"Show next previews\">></button>",
+			"<button type=\"button\" class=\"edition-preview-nav\" data-edition-thumb-next aria-label=\"" + runtimeLabel("nextPreviews", "Show next previews") + "\">></button>",
 			"</div>"
 		].join("");
 
@@ -200,6 +204,10 @@
 			const slide = gallerySlides[activeIndex];
 			main.textContent = slide.label;
 			main.setAttribute("aria-label", slide.label);
+			main.style.backgroundImage = slide.image ? "url(\"" + slide.image.replace(/"/g, "") + "\")" : "";
+			main.style.backgroundSize = slide.image ? "contain" : "";
+			main.style.backgroundPosition = slide.image ? "center" : "";
+			main.style.backgroundRepeat = slide.image ? "no-repeat" : "";
 		}
 
 		function renderThumbs() {
@@ -292,16 +300,16 @@
 		featuredPortrait.innerHTML = "<span>" + edition.portraitLabel + "</span>";
 		const linksMarkup = [];
 		if (edition.websiteUrl) {
-			linksMarkup.push("<a href=\"" + edition.websiteUrl + "\">Website</a>");
+			linksMarkup.push("<a href=\"" + edition.websiteUrl + "\">" + runtimeLabel("website", "Website") + "</a>");
 		}
 		if (edition.instagramUrl) {
-			linksMarkup.push("<a href=\"" + edition.instagramUrl + "\">Instagram</a>");
+			linksMarkup.push("<a href=\"" + edition.instagramUrl + "\">" + runtimeLabel("instagram", "Instagram") + "</a>");
 		}
 		if (edition.appleMusicUrl) {
-			linksMarkup.push("<a href=\"" + edition.appleMusicUrl + "\">Apple Music</a>");
+			linksMarkup.push("<a href=\"" + edition.appleMusicUrl + "\">" + runtimeLabel("appleMusic", "Apple Music") + "</a>");
 		}
 		if (edition.spotifyUrl) {
-			linksMarkup.push("<a href=\"" + edition.spotifyUrl + "\">Spotify</a>");
+			linksMarkup.push("<a href=\"" + edition.spotifyUrl + "\">" + runtimeLabel("spotify", "Spotify") + "</a>");
 		}
 		featuredContent.innerHTML = [
 			"<p class=\"artist-name\">" + edition.artistName + "</p>",
@@ -319,7 +327,7 @@
 
 		renderFeaturedEdition(featured);
 		featuredSection.classList.remove("is-revealed");
-		featuredPortrait.innerHTML = "<span>Hidden Artist Portrait</span>";
+		featuredPortrait.innerHTML = "<span>" + runtimeLabel("hiddenArtist", "Hidden Artist Portrait") + "</span>";
 		featuredContent.hidden = true;
 		if (revealButton) {
 			revealButton.textContent = "Click to reveal this month's artist.";

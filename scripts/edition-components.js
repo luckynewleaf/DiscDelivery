@@ -8,6 +8,7 @@
 	}
 
 	function createGalleryMarkup(slides) {
+		const runtime = window.discDeliveryContent && window.discDeliveryContent.common && window.discDeliveryContent.common.runtime || {};
 		const slideMarkup = slides
 			.map((slide) => {
 				return [
@@ -19,9 +20,9 @@
 			.join("");
 
 		return [
-			"<button class=\"gallery-control gallery-control-prev\" type=\"button\" aria-label=\"Previous image\" data-gallery-prev><span aria-hidden=\"true\">&#8592;</span></button>",
+			"<button class=\"gallery-control gallery-control-prev\" type=\"button\" aria-label=\"" + (runtime.previousPreviews || "Previous image") + "\" data-gallery-prev><span aria-hidden=\"true\">&#8592;</span></button>",
 			"<div class=\"gallery-viewport\" data-gallery-viewport><div class=\"gallery-track\" data-gallery-track>" + slideMarkup + "</div></div>",
-			"<button class=\"gallery-control gallery-control-next\" type=\"button\" aria-label=\"Next image\" data-gallery-next><span aria-hidden=\"true\">&#8594;</span></button>",
+			"<button class=\"gallery-control gallery-control-next\" type=\"button\" aria-label=\"" + (runtime.nextPreviews || "Next image") + "\" data-gallery-next><span aria-hidden=\"true\">&#8594;</span></button>",
 			"<div class=\"gallery-dots\" role=\"tablist\" aria-label=\"Gallery slide selector\" data-gallery-dots></div>"
 		].join("");
 	}
@@ -114,18 +115,19 @@
 		let lastFocusedElement = null;
 
 		function renderModalBody(edition) {
+			const runtime = window.discDeliveryContent && window.discDeliveryContent.common && window.discDeliveryContent.common.runtime || {};
 			const linksMarkup = [];
 			if (edition.websiteUrl) {
-				linksMarkup.push("<a href=\"" + edition.websiteUrl + "\">Website</a>");
+				linksMarkup.push("<a href=\"" + edition.websiteUrl + "\">" + (runtime.website || "Website") + "</a>");
 			}
 			if (edition.instagramUrl) {
-				linksMarkup.push("<a href=\"" + edition.instagramUrl + "\">Instagram</a>");
+				linksMarkup.push("<a href=\"" + edition.instagramUrl + "\">" + (runtime.instagram || "Instagram") + "</a>");
 			}
 			if (edition.appleMusicUrl) {
-				linksMarkup.push("<a href=\"" + edition.appleMusicUrl + "\">Apple Music</a>");
+				linksMarkup.push("<a href=\"" + edition.appleMusicUrl + "\">" + (runtime.appleMusic || "Apple Music") + "</a>");
 			}
 			if (edition.spotifyUrl) {
-				linksMarkup.push("<a href=\"" + edition.spotifyUrl + "\">Spotify</a>");
+				linksMarkup.push("<a href=\"" + edition.spotifyUrl + "\">" + (runtime.spotify || "Spotify") + "</a>");
 			}
 
 			body.innerHTML = [
