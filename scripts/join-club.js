@@ -6,10 +6,14 @@
 
 	const data = components.getData();
 	const galleryRoot = document.querySelector("[data-gallery]");
-	const plansRoot = document.querySelector("[data-membership-plans]");
 	const productTitle = document.querySelector("[data-product-title]");
 	const productDescription = document.querySelector("[data-product-description]");
-	const includedItems = Array.from(document.querySelectorAll("[data-included-edition]"));
+	const includedList = document.querySelector("[data-included-list]");
+	const subscriptionPrice = document.querySelector("[data-subscription-price]");
+	const subscriptionPriceAmount = document.querySelector("[data-subscription-price-amount]");
+	const subscriptionPriceSuffix = document.querySelector("[data-subscription-price-suffix]");
+	const subscriptionLoyalty = document.querySelector("[data-subscription-loyalty]");
+	const subscribeLink = document.querySelector("[data-subscribe-link]");
 	const editionToggleRoot = document.querySelector("[data-edition-toggle]");
 	const editionButtons = editionToggleRoot ? Array.from(editionToggleRoot.querySelectorAll("[data-product-edition]")) : [];
 	const recentRoot = document.querySelector("[data-recent-editions]");
@@ -36,15 +40,15 @@
 		return String(url).replace(/\/+$/, "");
 	}
 
-	function getShopifyCheckoutUrlForPlan(plan) {
-		if (!plan || !plan.id) {
+	function getShopifyCheckoutUrlForPlanId(planId) {
+		if (!planId) {
 			return "";
 		}
 
 		const checkoutConfig = data.shopifySubscriptionCheckout || {};
 		const storeUrl = normalizeStoreUrl(checkoutConfig.storeUrl);
 		const subscriptions = checkoutConfig.subscriptions || {};
-		const subscription = subscriptions[plan.id] || {};
+		const subscription = subscriptions[planId] || {};
 		const variantId = String(subscription.variantId || "").trim();
 		const quantity = Number(subscription.quantity) > 0 ? Number(subscription.quantity) : 1;
 
@@ -55,47 +59,108 @@
 		return storeUrl + "/cart/" + encodeURIComponent(variantId) + ":" + quantity + "?checkout";
 	}
 
-	function resolvePlanCheckoutUrl(plan) {
-		const shopifyCheckoutUrl = getShopifyCheckoutUrlForPlan(plan);
-		if (shopifyCheckoutUrl) {
-			return shopifyCheckoutUrl;
-		}
-		return plan.checkoutUrl || "#";
-	}
-
-	function showIncludedEdition(editionKey) {
-		includedItems.forEach(function (item) {
-			item.hidden = item.dataset.includedEdition !== editionKey;
-		});
-	}
-
-	function renderPlans(plans) {
-		if (!plansRoot) {
+	function renderSubscriptionOffer(editionConfig) {
+		if (!editionConfig) {
 			return;
 		}
 
-		const membershipPlans = plans || data.membershipPlans || [];
+		const subscription = editionConfig.subscription || {};
+		const loyaltyUrl = subscription.loyaltyUrl || "loyalty-system.html";
+		const ctaLabel = subscription.ctaLabel || "Subscribe";
+		const checkoutUrl = getShopifyCheckoutUrlForPlanId(subscription.planId);
 
-		plansRoot.innerHTML = membershipPlans
-			.map(function (plan) {
-				const checkoutUrl = resolvePlanCheckoutUrl(plan);
-				const badge = plan.saving ? "<p class=\"saving-badge\">" + plan.saving + "</p>" : "<p class=\"saving-badge-empty\"></p>";
-				const subprice = plan.subprice ? "<p class=\"subprice\">" + plan.subprice + "</p>" : "<p class=\"subprice\"></p>";
-				const description = plan.description ? "<p class=\"plan-description\">" + plan.description + "</p>" : "<p class=\"plan-description\"></p>";
+		if (subscriptionPriceAmount && subscription.priceAmount) {
+			subscriptionPriceAmount.textContent = subscription.priceAmount;
+		}
+
+		if (subscriptionPriceSuffix && subscription.priceSuffix) {
+			subscriptionPriceSuffix.textContent = subscription.priceSuffix;
+		}
+
+		if (subscriptionPrice && !subscriptionPriceAmount && subscription.priceAmount) {
+			subscriptionPrice.textContent = subscription.priceAmount + " " + (subscription.priceSuffix || "");
+		}
+
+		if (subscriptionLoyalty) {
+			const loyaltyAnchor = subscriptionLoyalty.querySelector("a");
+			if (loyaltyAnchor) {
+				loyaltyAnchor.setAttribute("href", loyaltyUrl);
+			}
+		}
+
+		if (subscribeLink) {
+			subscribeLink.textContent = ctaLabel;
+			if (checkoutUrl) {
+				subscribeLink.setAttribute("href", checkoutUrl);
+				subscribeLink.removeAttribute("aria-disabled");
+				subscribeLink.classList.remove("is-disabled");
+				subscribeLink.removeAttribute("title");
+			} else {
+				subscribeLink.setAttribute("href", "#");
+				subscribeLink.setAttribute("aria-disabled", "true");
+				subscribeLink.classList.add("is-disabled");
+				subscribeLink.setAttribute("title", "Subscription checkout will be available after Shopify products are connected.");
+			}
+		}
+	}
+
+	function getIncludedDetailsHref(itemId) {
+		if (itemId.indexOf("curated-cd") !== -1) {
+			return "whats-included.html#curated-cd";
+		}
+		if (itemId.indexOf("postcard") !== -1) {
+			return "whats-included.html#postcard";
+		}
+		if (itemId.indexOf("magazine") !== -1) {
+			return "whats-included.html#magazine";
+		}
+		return "whats-included.html";
+	}
+
+	function renderIncludedItems(editionConfig) {
+		if (!includedList) {
+			return;
+		}
+
+		const items = editionConfig && Array.isArray(editionConfig.includedItems) ? editionConfig.includedItems : [];
+		includedList.innerHTML = items
+			.map(function (item) {
+				const thumbSrc = item.thumbSrc || "";
+				const detailsHref = getIncludedDetailsHref(item.id || "");
 				return [
-					"<article class=\"plan-card\">",
-					"<div class=\"plan-header\">",
-					"<p class=\"label\">" + plan.label + "</p>",
-					badge,
-					"</div>",
-					"<p class=\"price\">" + plan.price + "</p>",
-					description,
-					subprice,
-					"<a class=\"select-button\" href=\"" + checkoutUrl + "\">Buy</a>",
-					"</article>"
+					"<li class=\"included-bullet-item\">",
+					"<a class=\"included-bullet-link\" href=\"" + detailsHref + "\">",
+					thumbSrc ? "<img class=\"included-bullet-thumb\" src=\"" + thumbSrc + "\" alt=\"" + item.name + "\">" : "",
+					"<span class=\"included-bullet-name\">" + item.name + "</span>",
+					"</a>",
+					"</li>"
 				].join("");
 			})
 			.join("");
+	}
+
+	function alignSubscriptionToMainPhoto() {
+		const offer = document.querySelector(".subscription-offer");
+		const mainPhoto = document.querySelector(".edition-preview-main");
+		if (!offer || !mainPhoto || !subscribeLink) {
+			return;
+		}
+
+		offer.style.transform = "";
+		if (window.matchMedia("(max-width: 820px)").matches) {
+			return;
+		}
+
+		const photoBottom = mainPhoto.getBoundingClientRect().bottom;
+		const buttonBottom = subscribeLink.getBoundingClientRect().bottom;
+		const offset = Math.round(photoBottom - buttonBottom) - 52;
+		offer.style.transform = "translateY(" + offset + "px)";
+	}
+
+	function scheduleSubscriptionAlignment() {
+		requestAnimationFrame(alignSubscriptionToMainPhoto);
+		setTimeout(alignSubscriptionToMainPhoto, 40);
+		setTimeout(alignSubscriptionToMainPhoto, 130);
 	}
 
 	function renderEditionGallery(slides) {
@@ -213,9 +278,10 @@
 			productDescription.textContent = editionConfig.description;
 		}
 
-		showIncludedEdition(activeEditionKey);
-		renderPlans(editionConfig.membershipPlans);
+		renderIncludedItems(editionConfig);
+		renderSubscriptionOffer(editionConfig);
 		renderEditionGallery(editionConfig.gallerySlides);
+		scheduleSubscriptionAlignment();
 	}
 
 	function renderFeaturedEdition(edition) {
@@ -393,6 +459,22 @@
 			});
 		});
 	}
+
+	if (subscribeLink) {
+		subscribeLink.addEventListener("click", function (event) {
+			if (subscribeLink.getAttribute("aria-disabled") === "true") {
+				event.preventDefault();
+			}
+		});
+	}
+
+	window.addEventListener("resize", function () {
+		scheduleSubscriptionAlignment();
+	});
+
+	window.addEventListener("load", function () {
+		scheduleSubscriptionAlignment();
+	});
 
 	setRedactedState();
 	activateEdition("standard");

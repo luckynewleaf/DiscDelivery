@@ -3,13 +3,7 @@ window.discDeliveryData = {
 		storeUrl: "",
 		subscriptions: {
 			"standard-monthly": { variantId: "", quantity: 1 },
-			"standard-three-month": { variantId: "", quantity: 1 },
-			"standard-six-month": { variantId: "", quantity: 1 },
-			"standard-twelve-month": { variantId: "", quantity: 1 },
-			"club-monthly": { variantId: "", quantity: 1 },
-			"club-three-month": { variantId: "", quantity: 1 },
-			"club-six-month": { variantId: "", quantity: 1 },
-			"club-twelve-month": { variantId: "", quantity: 1 }
+			"club-monthly": { variantId: "", quantity: 1 }
 		}
 	},
 	featuredEditionId: "edition-004",
@@ -17,37 +11,78 @@ window.discDeliveryData = {
 		standard: {
 			key: "standard",
 			label: "Standard Edition",
-			title: "Discover your next favorite artist.",
+			title: "Standard Edition",
 			description: "The Standard Edition delivers this month's featured artist on signed CD, plus a collectible card tied to the exact Disc Delivery edition.",
+			subscription: {
+				planId: "standard-monthly",
+				priceAmount: "\u20ac29.99",
+				priceSuffix: "/ month",
+				loyaltyUrl: "loyalty-system.html",
+				ctaLabel: "Subscribe"
+			},
 			gallerySlides: [
 				{ label: "Standard Edition Box", caption: "Standard Edition monthly box" },
 				{ label: "Signed CD", caption: "Signed CD from this month's featured artist" },
 				{ label: "Collectible Artist Card", caption: "Collectible card with artist + edition number" },
 				{ label: "Standard Edition Contents", caption: "Complete Standard Edition layout" }
 			],
-			membershipPlans: [
-				{ id: "standard-monthly", label: "Monthly", price: "€29.99", subprice: "per month", description: "A flexible way to discover one new artist every month.", saving: "", checkoutUrl: "checkout.html?edition=standard&plan=monthly" },
-				{ id: "standard-three-month", label: "3 Month Plan", price: "€84.99", subprice: "€28.33 per month", description: "Three curated deliveries prepaid at a lighter monthly rate.", saving: "Save 5%", checkoutUrl: "checkout.html?edition=standard&plan=three-month" },
-				{ id: "standard-six-month", label: "6 Month Plan", price: "€159.99", subprice: "€26.67 per month", description: "A half-year of independent music discovery, prepaid.", saving: "Save 11%", checkoutUrl: "checkout.html?edition=standard&plan=six-month" },
-				{ id: "standard-twelve-month", label: "12 Month Plan", price: "€299.99", subprice: "€25.00 per month", description: "Our strongest annual value for consistent monthly discovery.", saving: "Save 17%", checkoutUrl: "checkout.html?edition=standard&plan=twelve-month" }
+			includedItems: [
+				{
+					id: "standard-curated-cd",
+					name: "Curated CD",
+					description: "Featuring 10 - 12 songs from various artists and unique artwork.",
+					thumbSrc: "assets/cd_transparent.png",
+					fullSrc: "assets/cd_transparent.png"
+				},
+				{
+					id: "standard-postcard",
+					name: "Postcard",
+					description: "A thoughtful note written by Elliot, inspired by this month's edition.",
+					thumbSrc: "assets/postcard_transparent.png",
+					fullSrc: "assets/postcard_transparent.png"
+				}
 			]
 		},
 		club: {
 			key: "club",
 			label: "Club Edition",
-			title: "MAKE MORE OF EVERY DELIVERY.",
+			title: "Club Edition",
 			description: "Club Edition includes everything in Standard Edition and adds a custom physical art print created only for that month's Disc Delivery release.",
+			subscription: {
+				planId: "club-monthly",
+				priceAmount: "\u20ac39.99",
+				priceSuffix: "/ month",
+				loyaltyUrl: "loyalty-system.html",
+				ctaLabel: "Subscribe"
+			},
 			gallerySlides: [
 				{ label: "Club Edition Box", caption: "Club Edition monthly box" },
 				{ label: "Signed CD", caption: "Signed CD from this month's featured artist" },
 				{ label: "Collectible Artist Card", caption: "Collectible card with artist + edition number" },
 				{ label: "Exclusive Art Print", caption: "Monthly Club Edition-only physical art print" }
 			],
-			membershipPlans: [
-				{ id: "club-monthly", label: "Monthly", price: "€39.99", subprice: "per month", description: "Includes the monthly signed CD, collectible card, and exclusive art print.", saving: "", checkoutUrl: "checkout.html?edition=club&plan=monthly" },
-				{ id: "club-three-month", label: "3 Month Plan", price: "€113.99", subprice: "€38.00 per month", description: "Three prepaid Club Editions with better monthly value.", saving: "Save 5%", checkoutUrl: "checkout.html?edition=club&plan=three-month" },
-				{ id: "club-six-month", label: "6 Month Plan", price: "€215.99", subprice: "€36.00 per month", description: "Six curated Club Editions delivered across half a year.", saving: "Save 10%", checkoutUrl: "checkout.html?edition=club&plan=six-month" },
-				{ id: "club-twelve-month", label: "12 Month Plan", price: "€419.99", subprice: "€35.00 per month", description: "The full-year Club Edition plan at the strongest monthly price.", saving: "Save 12%", checkoutUrl: "checkout.html?edition=club&plan=twelve-month" }
+			includedItems: [
+				{
+					id: "club-curated-cd",
+					name: "Curated CD",
+					description: "Featuring 10 - 12 songs from various artists and unique artwork.",
+					thumbSrc: "assets/cd_transparent.png",
+					fullSrc: "assets/cd_transparent.png"
+				},
+				{
+					id: "club-postcard",
+					name: "Postcard (Your name, handwritten)",
+					description: "A thoughtful note written by Elliot, inspired by this month's edition.",
+					thumbSrc: "assets/postcard_transparent.png",
+					fullSrc: "assets/postcard_transparent.png"
+				},
+				{
+					id: "club-magazine",
+					name: "DELIVERED - The Magazine",
+					description: "This month's issue of the official Disc Delivery zine.",
+					thumbSrc: "assets/magazine_transparent.png",
+					fullSrc: "assets/magazine_transparent.png"
+				}
 			]
 		}
 	},
