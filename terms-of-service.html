@@ -6,43 +6,39 @@
 	<title>Terms of Service | Disc Delivery</title>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="styles/style.css">
 </head>
 <body data-content-page="terms">
-	<div class="page">
-		<header class="site-header">
-			<a class="logo-link" href="index.html" aria-label="Disc Delivery home">
-				<img class="logo-image" src="assets/DiscDelivery_Logo_White.png" alt="Disc Delivery">
-			</a>
-			<nav class="nav" aria-label="Main navigation">
-				<ul>
-					<li><a href="join-club.html">Join The Club</a></li>
-					<li><a href="shop.html">Shop</a></li>
-					<li><a href="about.html">About</a></li>
-					<li><a href="contact.html">Contact</a></li>
-					<li><a href="/account">Account</a></li>
-				</ul>
+	<header class="site-header">
+		<div class="header-row">
+			<nav class="main-nav" aria-label="Main navigation">
+				<ul data-site-nav></ul>
 			</nav>
-		</header>
+			<a class="wordmark" href="index.html" data-brand-name>Disc Delivery</a>
+			<div class="header-icons">
+				<a class="header-icon-link" href="/account" aria-label="Account" data-account-link>
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+				</a>
+				<button class="header-icon-link cart-toggle" type="button" aria-label="Open cart" data-cart-toggle>
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 8h12l-1 12H7L6 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+					<span class="cart-count" data-cart-count>0</span>
+				</button>
+			</div>
+		</div>
+	</header>
 
-		<main class="new-page">
-			<section class="section-slab section-slab--plain">
-				<h1 class="section-heading page-main-title">Terms of Service</h1>
-				<div class="story-copy">
-					<p>This placeholder terms page outlines the rules for memberships, shop purchases, and the Disc Delivery website.</p>
-					<p>By using the site, customers agree to payment, shipping, and cancellation terms presented at checkout.</p>
-					<p>For legal questions, contact info@notreallystrangers.com.</p>
-				</div>
-			</section>
-		</main>
+	<main class="simple-page">
+		<h1 data-page-title>Terms of Service</h1>
+		<div class="contact-lines" data-legal-body><p></p><p></p><p></p></div>
+	</main>
 
-		<footer class="site-footer site-footer-legal" aria-label="Site footer">
-			<p class="footer-line footer-brand">Disc Delivery</p>
-			<p class="footer-line footer-links"><a href="privacy-policy.html">Privacy Policy</a><span aria-hidden="true">·</span><a href="terms-of-service.html">Terms of Service</a></p>
-			<p class="footer-line footer-copy">© 2026 Disc Delivery</p>
-		</footer>
-	</div>
+	<footer class="site-footer">
+		<p class="footer-brand" data-brand-name>Disc Delivery</p>
+		<p class="footer-legal" data-footer-legal></p>
+		<p class="footer-copy" data-footer-copyright></p>
+	</footer>
+
 	<script src="scripts/site-content.js"></script>
 	<script src="scripts/content-loader.js"></script>
 </body>

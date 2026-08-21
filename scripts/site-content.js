@@ -1,140 +1,214 @@
 /*
- * DEPLOYMENT: edit this file or use content-editor.html, then export the JSON.
- * Copy the exported object into window.siteContent in this file, deploy the
- * updated files, and clear localStorage when checking the published version.
- * The editor's browser-only saved changes are not automatically published.
+ * DEPLOYMENT: edit this file directly, or use content-editor.html then Export
+ * JSON and paste the exported values back into window.siteContent below.
+ * Browser localStorage edits from the editor only affect that browser until
+ * you copy them in here and redeploy.
  */
 (function () {
-	const standardFaq = [
-		["How does the Disc Delivery Club work?", "You subscribe, we reveal the monthly artist before deadline, and we ship your mystery album edition after the window closes."],
-		["When is the artist revealed?", "About one week before the monthly subscription deadline."],
-		["When do I find out which album I’m receiving?", "The specific album remains a mystery until your box arrives."],
-		["When does my box ship?", "Shortly after the monthly subscription deadline closes."],
-		["Can I skip a month?", "Yes. Members can skip a month without cancelling their membership."],
-		["Can I cancel my membership?", "Yes. Cancel before your next billing cycle to stop renewal."],
-		["Where do you ship?", "Shipping regions and rates are shown clearly at checkout."],
-		["What happens if my CD arrives damaged?", "If the CD itself is damaged, we first offer a replacement and a discount code for your next box. If replacement stock is unavailable, you receive a full refund for that box and can keep the damaged one. This policy applies to CD and product damage, not cosmetic shipping-box wear."],
-		["What if I already own the album?", "Contact us and we will try to help with an alternative when available."],
-		["Are the CDs signed?", "Yes, signed copies are included whenever available through the artist."]
-	];
-
-	const months = ["Month 1", "Month 2", "Month 3", "Month 4", "Month 5", "Month 6", "Month 7", "Month 8", "Month 9", "Month 10", "Month 11", "Month 12+"];
-	const prices = function (start) {
-		return months.map(function (month, index) {
-			return [month, "€" + (start - index).toFixed(2)];
-		});
-	};
+	function placeholderTracklist(editionNumber) {
+		const tracks = [];
+		for (let i = 1; i <= 12; i += 1) {
+			const index = String(i).padStart(2, "0");
+			tracks.push({ song: "Track " + index, artist: "Artist " + editionNumber + "-" + index });
+		}
+		return tracks;
+	}
 
 	window.siteContent = {
-		// ===== SHARED HEADER, FOOTER, NAVIGATION, AND LOGO =====
+		// ===== SHARED HEADER, FOOTER, NAVIGATION =====
 		common: {
 			brand: "Disc Delivery",
-			navigation: ["Join The Club", "Shop", "About", "Contact", "Account"],
-			privacy: "Privacy Policy",
-			terms: "Terms of Service",
-			copyright: "© 2026 Disc Delivery",
-			images: {
-				logo: { src: "assets/DiscDelivery_Logo_White.png", alt: "Disc Delivery" }
-			},
-			// ----- RUNTIME LABELS USED BY GALLERIES, MODALS, ARCHIVE, AND CART -----
-			runtime: {
-				previousPreviews: "Show previous previews",
-				nextPreviews: "Show next previews",
-				thisMonth: "This Month",
-				hiddenArtist: "Hidden Artist Portrait",
-				closeArtistDetails: "Close artist details",
-				website: "Website",
-				instagram: "Instagram",
-				appleMusic: "Apple Music",
-				spotify: "Spotify",
-				cartUnavailable: "Cart preview unavailable outside Shopify storefront.",
-				noImage: "No image",
-				decreaseQuantity: "Decrease quantity",
-				increaseQuantity: "Increase quantity",
-				removeItem: "Remove"
+			nav: [
+				{ label: "Archive", href: "archive.html" },
+				{ label: "Past Editions", href: "past-editions.html" },
+				{ label: "For Artists", href: "for-artists.html" },
+				{ label: "Contact", href: "contact.html" }
+			],
+			accountUrl: "/account",
+			footer: {
+				legalLinks: [
+					{ label: "Privacy Policy", href: "privacy-policy.html" },
+					{ label: "Terms of Service", href: "terms-of-service.html" }
+				],
+				copyright: "© 2026 Disc Delivery"
 			}
 		},
-		// ===== WEBSITE PAGE CONTENT =====
-		pages: {
-			// ----- HOME PAGE -----
-			home: {
-				title: "Disc Delivery",
-				heading: "Good music. Delivered.",
-				heroAlt: "Placeholder space for the Disc Delivery hero video",
-				heroVideo: { src: "", poster: "" },
-				heroImage: { src: "", alt: "Disc Delivery hero image" },
-				joinLink: "Join the club"
-			},
-			// ----- JOIN THE CLUB PAGE -----
-			joinClub: {
-				title: "Join The Club",
-				editionTabs: ["STANDARD EDITION", "CLUB EDITION"],
-				includedHeading: "Included",
-				loyalty: "Pay less each month you’re subscribed.",
-				loyaltyLink: "Read More.",
-				faq: standardFaq,
-				folderTabs: ["How It Works", "Who Do We Choose?", "This Month’s Artist", "Recent Editions"],
-				howItWorks: [
-					["01 - Join The Club", "Choose your monthly recurring Disc Delivery subscription and start building loyalty savings over time."],
-					["02 - Artist Reveal", "We reveal the featured artist about a week before the deadline. The exact album stays hidden until your box is in your hands."],
-					["03 - Press Play", "Your signed CD arrives with an art card and a members-only email going deeper into the artist’s story and process."]
-				],
-				whoDoWeChoose: [
-					"Disc Delivery focuses on independent and emerging artists with strong identity, inventive music, and real creative perspective. We look for artists with something distinct to say - people we believe deserve wider audiences.",
-					"They do not need to be unknown. The key idea is new-to-you: records and voices you have not found yet, but might end up loving.",
-					"We also look for artists with a clear visual language and physical release mindset. The projects that work best in Disc Delivery are the ones where artwork, sequencing, and format all feel intentional.",
-					"Every pick is curated with long-term collectability in mind, not just trend momentum.",
-					"We do not feature artists who create AI-generated or AI-assisted music."
-				],
-				featuredArtistButton: "Click to reveal this month’s artist.",
-				recentEditions: "Recent Editions",
-				viewPastEditions: "View all past editions"
-				,
-				panels: [
-					{ title: "How It Works", steps: [["01 - Join The Club", "Choose your monthly recurring Disc Delivery subscription and start building loyalty savings over time."], ["02 - Artist Reveal", "We reveal the featured artist about a week before the deadline. The exact album stays hidden until your box is in your hands."], ["03 - Press Play", "Your signed CD arrives with an art card and a members-only email going deeper into the artist’s story and process."]] },
-					{ title: "Who Do We Choose?", paragraphs: ["Disc Delivery focuses on independent and emerging artists with strong identity, inventive music, and real creative perspective. We look for artists with something distinct to say - people we believe deserve wider audiences.", "They do not need to be unknown. The key idea is new-to-you: records and voices you have not found yet, but might end up loving.", "We also look for artists with a clear visual language and physical release mindset. The projects that work best in Disc Delivery are the ones where artwork, sequencing, and format all feel intentional.", "Every pick is curated with long-term collectability in mind, not just trend momentum.", "We do not feature artists who create AI-generated or AI-assisted music."] },
-					{ title: "This Month’s Artist", artist: { image: { src: "", alt: "Artist portrait" }, name: "Artist Placeholder 004", monthYear: "August 2026", editionNumber: "Edition 004", description: "Artist Placeholder 004 blends melodic experimentation with personal songwriting, balancing bold production with emotionally direct lyrics.", links: { website: { enabled: true, url: "#" }, instagram: { enabled: true, url: "#" }, appleMusic: { enabled: true, url: "#" }, spotify: { enabled: true, url: "#" } } } }
-				]
-			},
-			// ----- SHOP PAGE AND CART -----
-			shop: { title: "Shop", cart: "In Your Cart", categories: ["Past Editions", "Apparel", "Small Goods"], cartTitle: "Your Cart", emptyCart: "Your cart is empty.", total: "Total", checkout: "Checkout" },
-			// ----- ABOUT PAGE -----
-			about: {
-				title: "About Me", name: "Hi, I’m Elliot Beck", founderAlt: "Founder portrait placeholder", founderPlaceholder: "Portrait placeholder for Elliot Beck.",
-				images: { founder: "", prototype: "", packaging: "", sketches: "" },
-				intro: ["I’ve always been drawn to music that feels physical. I like sleeves, liner notes, inserts, and the feeling that a release has a life outside a streaming tab.", "Disc Delivery started from that instinct. I wanted to build something that made discovering music feel a little more personal and a little more collectible, while still giving independent artists a thoughtful way to reach new listeners.", "I come to this from a place of curiosity, design, and genuine love for records that stay with you. I wanted Disc Delivery to feel editorial and carefully art-directed, but still warm and human.", "It’s a small project by design. I want every edition to feel considered, memorable, and worth keeping."],
-				whyTitle: "Why I Started Disc Delivery",
-				why: ["I wanted to make discovery feel exciting again. A lot of music lives online now, but I missed the feeling of finding an artist in a way that gave the release weight, context, and something to hold onto.", "Disc Delivery is my answer to that. It is a small, curated club built around physical releases, where the packaging matters, the presentation matters, and the music is introduced with a little more care than a fast-moving feed usually allows.", "I wanted every edition to feel like an object that could sit on a shelf and still carry a memory later. The goal is not just to send out records. It is to shape a moment around them.", "That means slowing things down, paying attention to the visuals, and treating each artist as the center of a tiny release ecosystem. I want the club to feel intimate, specific, and worth keeping.", "Disc Delivery is also a way to support artists whose work already feels thought-through and ready for a physical format. I like the idea of giving that work a home outside the usual streaming-first path."],
-				backersTitle: "Kickstarter Backers", backersIntro: "Thank you for making Disc Delivery possible.", backers: ["Alex Morgan", "Sophie Bennett", "Daniel Carter", "Mia Thompson", "Jordan Ellis", "Hannah Cooper", "Liam Foster", "Grace Mitchell", "Noah Reynolds", "Olivia Hayes", "Ethan Brooks", "Ava Turner", "Caleb Bennett", "Chloe Parker", "Leo Simmons", "Ruby Carter", "Mason Reed", "Isla Morgan", "Nora Bennett", "Owen Price", "Sadie Collins", "Jasper Lane", "Ella Walker", "Henry Lawson"]
-			},
-			// ----- CONTACT PAGE AND ARTIST SUBMISSION DIALOG -----
-			contact: { title: "Contact Us", customerCare: "Customer Care: customercare@discdelivery.com", business: "Press & Business Inquiries: business@discdelivery.com", artists: "For artists: apply@discdelivery.com", artistButton: "Artist Requirements", dialogTitle: "Artist requirements", dialogIntro: "We are looking for artists who are already signed to a label and who either have CD stock or can produce it. We do not have the capability to manufacture CDs ourselves.", dialogListTitle: "Please include:", dialogItems: ["Real name", "Stage name", "Birthdate", "Label you are signed to", "Country", "Links or usernames for your primary social media, like TikTok and Instagram", "Your official website, if you have one"] },
-			// ----- PAST EDITIONS ARCHIVE PAGE -----
-			pastEditions: { title: "Past Editions", archiveLabel: "Disc Delivery artist archive" },
-			// ----- WHAT’S INCLUDED PAGE AND BOX ITEM EDITORIAL -----
-			included: {
-				title: "What’s Included In Each Box",
-				items: [
-					{ id: "curated-cd", title: "Curated CD", image: { src: "assets/cd_transparent.png", alt: "Curated CD" }, paragraphs: ["Every Disc Delivery box includes one curated CD built around this month’s featured artist and visual world. Each disc typically contains 10 - 12 tracks and is sequenced to feel like a complete listening experience from start to finish.", "We treat the physical presentation as part of the release itself. Artwork is custom-designed for each edition so the disc, printed details, and packaging all feel intentionally connected to that specific month and artist."] },
-					{ id: "postcard", title: "Postcard", image: { src: "assets/postcard_transparent.png", alt: "Postcard" }, paragraphs: ["Each delivery also includes a postcard with a short note from Elliot tied to the edition and artist of the month. It is designed to add context, tone, and a personal layer to the listening experience.", "The postcard is meant to feel like part of a collectible set, so its design direction changes month to month while still fitting the overall Disc Delivery identity."], note: "If you choose the Club Edition, your first name (from your order) is handwritten by Elliot on your postcard." },
-					{ id: "magazine", title: "DELIVERED - The Magazine", image: { src: "assets/magazine_transparent.png", alt: "DELIVERED - The Magazine" }, exclusive: "Club Edition Exclusive", paragraphs: ["DELIVERED is the monthly Disc Delivery zine included in Club Edition boxes. It expands on the artist reveal with additional context, visuals, and behind-the-scenes editorial details that go deeper than the standard insert materials.", "Each issue is developed to match the tone of that month’s release, giving Club members a richer collectible layer that sits alongside the music and physical artwork."] }
-				]
-			},
-			// ----- LOYALTY SYSTEM PAGE AND MONTHLY TABLES -----
-			loyalty: { title: "Loyalty System", paragraphs: ["Every Disc Delivery subscription starts at its standard monthly price. For every month you remain subscribed, your monthly price decreases by €1. This rewards members for staying with Disc Delivery longer and means the longer you stay, the less you pay.", "Your Loyalty Price is based on how many consecutive months you have been subscribed. If you cancel your subscription at any point, your accumulated Loyalty Price and savings are reset. If you subscribe again in the future, you start again at the standard monthly price.", "The Loyalty System is capped at 12 months. After reaching the 12-month price, that price remains your monthly price for as long as you remain subscribed."], note: "The price shown for each month below is the price paid for that month’s delivery. After month 12, the month 12+ price becomes your ongoing monthly price while your subscription remains active.", tables: [{ title: "Standard Edition", rows: prices(29.99) }, { title: "Club Edition", rows: prices(39.99) }] },
-			// ----- PRIVACY POLICY PAGE -----
-			privacy: { title: "Privacy Policy", paragraphs: ["This placeholder policy page explains how Disc Delivery handles account details, order data, and contact information.", "We only store data needed to process memberships, orders, and support requests, and we never sell your personal information.", "For policy requests, contact customercare@notreallystrangers.com."] },
-			// ----- TERMS OF SERVICE PAGE -----
-			terms: { title: "Terms of Service", paragraphs: ["This placeholder terms page outlines the rules for memberships, shop purchases, and the Disc Delivery website.", "By using the site, customers agree to payment, shipping, and cancellation terms presented at checkout.", "For legal questions, contact info@notreallystrangers.com."] }
+
+		// ===== HOME PAGE =====
+		home: {
+			heroLines: ["Good Music.", "Delivered."],
+			heroVideo: { src: "", poster: "" },
+			heroImage: { src: "", alt: "Disc Delivery hero image" },
+			heroCta: { label: "See the current edition", href: "subscribe.html" },
+			howItWorksTitle: "How It Works",
+			howItWorksIntro: "Disc Delivery is a recurring physical music club built around discovery, not algorithms.",
+			howItWorksSteps: [
+				{ title: "We Find the Freshest Artists", body: "Disc Delivery looks for independent, emerging, small, and under-the-radar artists making music worth discovering." },
+				{ title: "We Curate the Edition", body: "Each edition contains 12 songs from 12 different artists. We carefully curate the songs and build a physical compilation around them: a digipak CD, custom cover artwork, a booklet featuring the 12 artists, and an additional art card with that month's cover artwork." },
+				{ title: "We Deliver It", body: "The finished edition is delivered to the subscriber, so they can discover music they probably wouldn't have found through an algorithm or their usual listening habits." }
+			],
+			whyTitle: "Why Disc Delivery",
+			whyStatement: "Music used to find you.",
+			whyBody: [
+				"You heard something in a coffee shop. You heard something in a TV show. You heard something on the radio. You stumbled across it while living your life — nothing recommended it to you.",
+				"Disc Delivery isn't about calculated recommendations. It's about receiving 12 songs from 12 different artists and discovering something you didn't even know you wanted to hear."
+			],
+			archiveTitle: "From the Archive",
+			archiveViewAll: "View Full Archive",
+			archiveCount: 4
 		},
-		// ===== JOIN PAGE EDITION DISPLAY CONTENT AND IMAGE PATHS =====
+
+		// ===== SUBSCRIBE (SUBSCRIPTION PRODUCT) PAGE =====
+		subscribe: {
+			eyebrow: "The Subscription",
+			title: "Disc Delivery Club",
+			shortDescription: "12 songs from 12 emerging artists, one song each, delivered as a single physical compilation on a recurring schedule.",
+			image: { src: "", alt: "Current Disc Delivery edition" },
+			gallery: [
+				{ label: "Current Edition Box", image: "" },
+				{ label: "Digipak CD", image: "" },
+				{ label: "Artist Booklet", image: "" }
+			],
+			options: [
+				{ id: "monthly", label: "Monthly", price: "€15", priceSuffix: "/ box", billingNote: "Billed every month.", planId: "monthly" },
+				{ id: "quarterly", label: "Every 3 Months", price: "€40", priceSuffix: "/ 3 boxes", perBoxPrice: "€13.33 / box", savingsLabel: "Save €5", billingNote: "Billed every 3 months.", planId: "quarterly" }
+			],
+			subscribeButtonLabel: "Subscribe",
+			billingPromptTitle: "How would you like to subscribe?",
+			billingContinueLabel: "Continue to Checkout",
+			includedTitle: "What you receive",
+			includedItems: [
+				{ bold: "Digipak CD", text: "with 12 songs from 12 different emerging artists, one song each, and custom cover artwork." },
+				{ bold: "Artist Booklet", text: "with a page on each of the 12 artists featured in that edition." },
+				{ bold: "Art Card", text: "featuring that month's cover artwork." }
+			],
+			detailsTitle: "Subscription details",
+			details: [
+				"A new edition is revealed roughly a week before each shipping deadline. The full artist and song list stays a mystery until your box arrives.",
+				"Monthly: €15 per box + shipping, billed once per month. Cancel any time; cancellation takes effect at your next billing date.",
+				"Every 3 Months: €40 per three boxes + shipping, billed once every three months. This is a commitment to the three boxes in that billing period — cancelling stops the next 3-month renewal, it does not cancel or refund the current commitment.",
+				"There is no option to skip an individual month within an active plan."
+			],
+			shippingTitle: "Shipping",
+			shipping: [
+				"Shipping regions and rates are shown clearly at checkout.",
+				"Boxes ship shortly after each subscription deadline closes."
+			]
+		},
+
+		// ===== ARCHIVE (FULL EDITORIAL HISTORY, NOT FOR SALE) =====
+		archive: {
+			title: "Archive",
+			intro: "Every Disc Delivery edition released to date. The Archive is editorial history, not a shop.",
+			featuredSongsTitle: "Featured Songs"
+		},
+
+		// ===== SHOP / PAST EDITIONS (IN-STOCK PHYSICAL COPIES FOR SALE) =====
+		shop: {
+			title: "Past Editions",
+			intro: "Past Disc Delivery editions, available to purchase while supplies last.",
+			emptyState: "No past editions are currently in stock.",
+			purchaseSurcharge: 5,
+			addToCartLabel: "Add to Cart",
+			outOfStockLabel: "Out of Stock",
+			includedTitle: "What's included",
+			shippingTitle: "Shipping",
+			shipping: ["Shipping regions and rates are shown clearly at checkout."],
+			backLink: { label: "View all past editions", href: "past-editions.html" }
+		},
+
+		// ===== FOR ARTISTS PAGE =====
+		forArtists: {
+			title: "For Artists",
+			whoTitle: "Who are we looking for?",
+			who: "Independent and emerging artists with strong identity, inventive music, and a real creative perspective — people we believe deserve wider audiences. They don't need to be unknown, just new-to-you. We do not feature artists who create AI-generated or AI-assisted music.",
+			chosenTitle: "Who gets chosen?",
+			chosen: "Twelve artists are selected for each edition, chosen for a clear creative identity and long-term collectability rather than trend momentum.",
+			doTitle: "What do we do?",
+			doText: "Selected artists are pressed onto that edition's 12-song compilation CD, given a page in the accompanying artist booklet, and introduced to Disc Delivery subscribers.",
+			expectTitle: "What do we expect?",
+			expectText: "One finished, mastered song ready for physical release, supporting artwork, and clear, responsive communication throughout that edition's production.",
+			submitTitle: "How do I submit?",
+			submitIntro: "Email us with your music, artwork, and a short introduction.",
+			submitEmail: "apply@discdelivery.com"
+		},
+
+		// ===== CONTACT PAGE (INCLUDES FAQ BELOW CONTACT INFORMATION) =====
+		contact: {
+			title: "Contact",
+			customerCare: "Customer Care: customercare@discdelivery.com",
+			business: "Press & Business Inquiries: business@discdelivery.com",
+			artistNote: "Looking to submit music? Visit the For Artists page.",
+			artistNoteLink: { label: "For Artists", href: "for-artists.html" },
+			faqTitle: "FAQ"
+		},
+
+		// ===== FAQ CONTENT (RENDERED ON THE CONTACT PAGE) =====
+		faq: {
+			title: "FAQ",
+			categories: [
+				{
+					title: "Subscription",
+					items: [
+						["How does the Disc Delivery Club work?", "You subscribe, we reveal the 12 featured artists before the deadline, and we ship your mystery 12-song compilation after the window closes."],
+						["What are the subscription options?", "Monthly, billed once a month, or Every 3 Months, billed once every 3 months for that period's three boxes."],
+						["Can I skip a month?", "No. There is no option to skip an individual month within an active plan."],
+						["Can I cancel my membership?", "Monthly plans can be cancelled anytime, effective at your next billing date. Every 3 Months plans cancel the next 3-month renewal; the current 3-month commitment is not cancelled or refunded."],
+						["When are the artists revealed?", "About one week before the shipping deadline."],
+						["When do I find out which artists and songs are included?", "The full artist and song list remains a mystery until your box arrives."]
+					]
+				},
+				{
+					title: "Shipping",
+					items: [
+						["When does my box ship?", "Shortly after the subscription deadline closes."],
+						["Where do you ship?", "Shipping regions and rates are shown clearly at checkout."]
+					]
+				},
+				{
+					title: "Orders & Past Editions",
+					items: [
+						["What is the difference between the Archive and Past Editions?", "The Archive is our full editorial history of past compilations and is not for sale. Past Editions are in-stock physical copies you can purchase."],
+						["How do I buy a past edition?", "Browse in-stock editions on the Past Editions page and add one to your cart."],
+						["What if I already own an edition?", "Contact us and we'll try to help with an alternative when available."]
+					]
+				},
+				{
+					title: "Returns & Damaged Mail",
+					items: [
+						["What happens if my CD arrives damaged?", "If the CD itself is damaged, we first offer a replacement and a discount code for your next box. If replacement stock is unavailable, you receive a full refund for that box and can keep the damaged one. This applies to CD and product damage, not cosmetic shipping-box wear."]
+					]
+				},
+				{
+					title: "Artists",
+					items: [
+						["Is the booklet included with every box?", "Yes, every box includes the digipak CD, the artist booklet, and the art card described on the subscription page."],
+						["How do I submit my music?", "Visit the For Artists page for details and a submission email."]
+					]
+				}
+			]
+		},
+
+		// ===== LEGAL PAGES =====
+		privacy: { title: "Privacy Policy", paragraphs: ["This placeholder policy page explains how Disc Delivery handles account details, order data, and contact information.", "We only store data needed to process memberships, orders, and support requests, and we never sell your personal information.", "For policy requests, contact customercare@discdelivery.com."] },
+		terms: { title: "Terms of Service", paragraphs: ["This placeholder terms page outlines the rules for memberships, shop purchases, and the Disc Delivery website.", "By using the site, customers agree to payment, shipping, and cancellation terms presented at checkout.", "For legal questions, contact customercare@discdelivery.com."] },
+
+		// ===== EDITIONS (SHARED SOURCE FOR HOME, ARCHIVE, AND SHOP) =====
 		editions: {
-			productEditions: {
-				standard: { title: "Standard Edition", description: "The Standard Edition delivers this month’s featured artist on signed CD, plus a collectible card tied to the exact Disc Delivery edition.", gallerySlides: [{ label: "Standard Edition Box", image: "" }, { label: "Signed CD", image: "" }, { label: "Collectible Artist Card", image: "" }, { label: "Standard Edition Contents", image: "" }], includedItems: [{ name: "Curated CD", description: "Featuring 10 - 12 songs from various artists and unique artwork.", thumbSrc: "assets/cd_transparent.png" }, { name: "Postcard", description: "A thoughtful note written by Elliot, inspired by this month’s edition.", thumbSrc: "assets/postcard_transparent.png" }] },
-				club: { title: "Club Edition", description: "Club Edition includes everything in Standard Edition and adds a custom physical art print created only for that month’s Disc Delivery release.", gallerySlides: [{ label: "Club Edition Box", image: "" }, { label: "Signed CD", image: "" }, { label: "Collectible Artist Card", image: "" }, { label: "Exclusive Art Print", image: "" }], includedItems: [{ name: "Curated CD", description: "Featuring 10 - 12 songs from various artists and unique artwork.", thumbSrc: "assets/cd_transparent.png" }, { name: "Postcard (Your name, handwritten)", description: "A thoughtful note written by Elliot, inspired by this month’s edition.", thumbSrc: "assets/postcard_transparent.png" }, { name: "DELIVERED - The Magazine", description: "This month’s issue of the official Disc Delivery zine.", thumbSrc: "assets/magazine_transparent.png" }] }
-			}
+			featuredId: "edition-004",
+			items: [
+				{ id: "edition-004", slug: "edition-004", editionCode: "Edition 004", monthYear: "August 2026", image: { src: "", alt: "Edition 004 artwork" }, description: "12 songs from 12 emerging artists, spanning melodic experimentation, cinematic textures, and direct songwriting.", inStock: true, tracklist: placeholderTracklist(4) },
+				{ id: "edition-003", slug: "edition-003", editionCode: "Edition 003", monthYear: "July 2026", image: { src: "", alt: "Edition 003 artwork" }, description: "12 songs from 12 emerging artists, pairing rhythm-forward arrangements with intimate storytelling.", inStock: true, tracklist: placeholderTracklist(3) },
+				{ id: "edition-002", slug: "edition-002", editionCode: "Edition 002", monthYear: "June 2026", image: { src: "", alt: "Edition 002 artwork" }, description: "12 songs from 12 emerging artists, crossing genres with a focus on mood and sonic detail.", inStock: true, tracklist: placeholderTracklist(2) },
+				{ id: "edition-001", slug: "edition-001", editionCode: "Edition 001", monthYear: "May 2026", image: { src: "", alt: "Edition 001 artwork" }, description: "Our first edition: 12 songs from 12 emerging artists with direct lyrics and wide-open arrangements.", inStock: false, tracklist: placeholderTracklist(1) }
+			]
 		},
-		// ===== ADDITIONAL IMAGE PATHS =====
-		images: {}
+
+		// ===== SHOPIFY / CHECKOUT CONFIGURATION (NOT EDITORIAL CONTENT) =====
+		checkout: {
+			storeUrl: "",
+			subscriptionVariants: { monthly: { variantId: "", quantity: 1 }, quarterly: { variantId: "", quantity: 1 } },
+			pastEditionVariants: {}
+		}
 	};
 })();

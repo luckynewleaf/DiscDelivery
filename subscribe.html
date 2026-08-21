@@ -3,13 +3,13 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Past Editions | Disc Delivery</title>
+	<title>Subscribe | Disc Delivery</title>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="styles/style.css">
 </head>
-<body data-content-page="shop">
+<body data-content-page="subscribe">
 	<header class="site-header">
 		<div class="header-row">
 			<nav class="main-nav" aria-label="Main navigation">
@@ -28,10 +28,39 @@
 		</div>
 	</header>
 
-	<main class="section" style="padding-top: var(--space-4);">
-		<h1 class="section-title" data-page-title>Past Editions</h1>
-		<p class="what-is-body" data-page-intro></p>
-		<div class="editions-grid" style="margin-top: var(--space-4);" data-editions-grid></div>
+	<main class="product-page">
+		<div class="product-layout">
+			<div>
+				<div class="product-media" data-product-media></div>
+				<div class="product-gallery-thumbs" data-product-gallery></div>
+			</div>
+			<div>
+				<span class="section-eyebrow" data-eyebrow>The Subscription</span>
+				<h1 class="product-title" data-product-title>Disc Delivery Club</h1>
+				<p class="product-description" data-product-description></p>
+
+				<div class="subscription-options" data-subscription-options></div>
+
+				<div class="product-action">
+					<button class="btn" type="button" data-subscribe-button>Subscribe</button>
+				</div>
+
+				<section class="product-info-block">
+					<h2 data-included-title>What you receive</h2>
+					<ul class="included-list" data-included-items></ul>
+				</section>
+
+				<section class="product-info-block">
+					<h2 data-details-title>Subscription details</h2>
+					<ul class="details-list" data-details-list><li></li><li></li><li></li><li></li></ul>
+				</section>
+
+				<section class="product-info-block">
+					<h2 data-shipping-title>Shipping</h2>
+					<ul class="shipping-list" data-shipping-list><li></li><li></li></ul>
+				</section>
+			</div>
+		</div>
 	</main>
 
 	<footer class="site-footer">

@@ -1,8 +1,8 @@
 <!--
 Deployment: make changes here, click Save, then Export JSON. Copy the exported
 content values into scripts/site-content.js, deploy the updated files, and
-clear localStorage when checking the published site. New images must be placed
-in assets/ before you enter their file path.
+clear localStorage when checking the published site. New images must be
+placed in assets/ before you enter their file path.
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -12,25 +12,39 @@ in assets/ before you enter their file path.
 	<title>Content Editor | Disc Delivery</title>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="styles/style.css">
 </head>
 <body data-content-page="editor">
-	<div class="page content-editor-page">
-		<header class="site-header">
-			<a class="logo-link" href="index.html" aria-label="Disc Delivery home"><img class="logo-image" src="assets/DiscDelivery_Logo_White.png" alt="Disc Delivery"></a>
-			<nav class="nav" aria-label="Main navigation"><ul><li><a href="join-club.html">Join The Club</a></li><li><a href="shop.html">Shop</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li><li><a href="/account">Account</a></li></ul></nav>
-		</header>
-		<main class="new-page">
-			<section class="section-slab section-slab--plain">
-				<h1 class="section-heading page-main-title">Content Editor</h1>
-				<p class="editor-note">Only the important editable content is shown here, divided by page. Save changes for this browser, then export JSON and copy those values into scripts/site-content.js before deploying.</p>
-				<div class="editor-actions" role="toolbar" aria-label="Content editor actions"><button class="select-button" type="button" data-editor-save>Save Changes</button><button class="select-button" type="button" data-editor-reset>Reset to Defaults</button><button class="select-button" type="button" data-editor-export>Export JSON</button><label class="select-button editor-import-label">Import JSON<input type="file" accept="application/json" data-editor-import hidden></label><span class="editor-status" role="status" data-editor-status></span></div>
-			</section>
-			<section class="section-slab editor-fields" data-editor-fields aria-label="Editable website content"></section>
-		</main>
-		<footer class="site-footer site-footer-legal" aria-label="Site footer"><p class="footer-line footer-brand">Disc Delivery</p><p class="footer-line footer-links"><a href="privacy-policy.html">Privacy Policy</a><span aria-hidden="true">·</span><a href="terms-of-service.html">Terms of Service</a></p><p class="footer-line footer-copy">© 2026 Disc Delivery</p></footer>
-	</div>
+	<header class="site-header">
+		<div class="header-row">
+			<nav class="main-nav" aria-label="Main navigation">
+				<ul data-site-nav></ul>
+			</nav>
+			<a class="wordmark" href="index.html" data-brand-name>Disc Delivery</a>
+			<div class="header-icons"></div>
+		</div>
+	</header>
+
+	<main class="simple-page" style="max-width: 60rem;">
+		<h1>Content Editor</h1>
+		<p class="editor-note">Only the content that matters is shown here, divided by page. Save changes for this browser, then export JSON and copy those values into scripts/site-content.js before deploying.</p>
+		<div class="editor-actions" role="toolbar" aria-label="Content editor actions">
+			<button class="btn btn-outline" type="button" data-editor-save>Save Changes</button>
+			<button class="btn btn-outline" type="button" data-editor-reset>Reset to Defaults</button>
+			<button class="btn btn-outline" type="button" data-editor-export>Export JSON</button>
+			<label class="btn btn-outline">Import JSON<input type="file" accept="application/json" data-editor-import hidden></label>
+			<span class="editor-status" role="status" data-editor-status></span>
+		</div>
+		<div class="editor-fields" data-editor-fields aria-label="Editable website content" style="margin-top: var(--space-3);"></div>
+	</main>
+
+	<footer class="site-footer">
+		<p class="footer-brand" data-brand-name>Disc Delivery</p>
+		<p class="footer-legal" data-footer-legal></p>
+		<p class="footer-copy" data-footer-copyright></p>
+	</footer>
+
 	<script src="scripts/site-content.js"></script>
 	<script src="scripts/content-loader.js"></script>
 	<script>
@@ -39,20 +53,62 @@ in assets/ before you enter their file path.
 		const root = document.querySelector("[data-editor-fields]");
 		const status = document.querySelector("[data-editor-status]");
 		let content = api.getContent();
-		delete content.pageTextOverrides;
 		const sections = [
-			{ title: "Home Page (index)", path: "pages.home", fields: [{ key: "title", label: "Page title" }, { key: "heroVideo.src", label: "Hero video file path" }, { key: "heroVideo.poster", label: "Hero video poster image path", image: true }, { key: "heroImage.src", label: "Hero image file path", image: true }, { key: "heroImage.alt", label: "Hero accessibility text" }] },
-			{ title: "Join The Club - Standard Edition", path: "editions.productEditions.standard", fields: [{ key: "description", label: "Description" }, { key: "gallerySlides", label: "Edition photos", repeat: true, fields: [{ key: "label", label: "Photo label" }, { key: "image", label: "Photo file path", image: true }] }] },
-			{ title: "Join The Club - Club Edition", path: "editions.productEditions.club", fields: [{ key: "description", label: "Description" }, { key: "gallerySlides", label: "Edition photos", repeat: true, fields: [{ key: "label", label: "Photo label" }, { key: "image", label: "Photo file path", image: true }] }] },
-			{ title: "Join The Club - Info Panels", path: "pages.joinClub.panels", repeat: true, fields: [{ key: "title", label: "Panel title" }, { key: "steps", label: "Steps", repeat: true, fields: [{ key: "0", label: "Step title" }, { key: "1", label: "Step description" }] }, { key: "paragraphs", label: "Panel descriptions", repeat: true }] },
-			{ title: "Join The Club - This Month's Artist", path: "pages.joinClub.panels.2.artist", fields: [{ key: "image.src", label: "Artist photo file path", image: true }, { key: "image.alt", label: "Artist photo alt text" }, { key: "name", label: "Artist name" }, { key: "monthYear", label: "Month and year" }, { key: "editionNumber", label: "Edition number" }, { key: "description", label: "Artist description" }, { key: "links.website.enabled", label: "Show website link", boolean: true }, { key: "links.website.url", label: "Website URL" }, { key: "links.instagram.enabled", label: "Show Instagram link", boolean: true }, { key: "links.instagram.url", label: "Instagram URL" }, { key: "links.appleMusic.enabled", label: "Show Apple Music link", boolean: true }, { key: "links.appleMusic.url", label: "Apple Music URL" }, { key: "links.spotify.enabled", label: "Show Spotify link", boolean: true }, { key: "links.spotify.url", label: "Spotify URL" }] },
-			{ title: "Join The Club - FAQ", path: "pages.joinClub.faq", repeat: true, fields: [{ key: "0", label: "Question" }, { key: "1", label: "Answer" }] },
-			{ title: "About Page", path: "pages.about", fields: [{ key: "title", label: "Page title" }, { key: "name", label: "Intro section title" }, { key: "intro", label: "Intro body text", repeat: true }, { key: "whyTitle", label: "Why I Started section title" }, { key: "why", label: "Why I Started body text", repeat: true }, { key: "images.founder", label: "Founder photo file path", image: true }, { key: "images.prototype", label: "Prototype photo file path", image: true }, { key: "images.packaging", label: "Packaging photo file path", image: true }, { key: "images.sketches", label: "Sketches photo file path", image: true }] },
-			{ title: "About Page - Kickstarter Backers", path: "pages.about", fields: [{ key: "backersTitle", label: "Section title" }, { key: "backersIntro", label: "Intro text" }, { key: "backers", label: "Backer names", repeat: true }] },
-			{ title: "Contact Page", path: "pages.contact", fields: [{ key: "title", label: "Page title" }, { key: "customerCare", label: "Customer care text" }, { key: "business", label: "Press and business text" }, { key: "artists", label: "Artist contact text" }, { key: "artistButton", label: "Artist requirements button" }] },
-			{ title: "Contact Page - Artist Requirements Popup", path: "pages.contact", fields: [{ key: "dialogTitle", label: "Popup title" }, { key: "dialogIntro", label: "Popup introduction" }, { key: "dialogListTitle", label: "List heading" }, { key: "dialogItems", label: "Required information", repeat: true }] },
-			{ title: "What's Included In Each Box", path: "pages.included", fields: [{ key: "title", label: "Page title" }, { key: "items", label: "Included items", repeat: true, fields: [{ key: "title", label: "Item title" }, { key: "image.src", label: "Item photo file path", image: true }, { key: "image.alt", label: "Item photo alt text" }, { key: "paragraphs", label: "Item body text", repeat: true }, { key: "note", label: "Item note" }, { key: "exclusive", label: "Exclusive label" }] }] },
-			{ title: "Loyalty System", path: "pages.loyalty", fields: [{ key: "title", label: "Page title" }, { key: "paragraphs", label: "Body text", repeat: true }, { key: "note", label: "Pricing note" }] }
+			{ title: "Home Page", path: "home", fields: [
+				{ key: "heroLines.0", label: "Hero line 1" },
+				{ key: "heroLines.1", label: "Hero line 2" },
+				{ key: "heroVideo.src", label: "Hero video file path" },
+				{ key: "heroVideo.poster", label: "Hero video poster image", image: true },
+				{ key: "heroImage.src", label: "Hero fallback image", image: true },
+				{ key: "whatIsTitle", label: "\u201CWhat is Disc Delivery\u201D title" },
+				{ key: "whatIsBody", label: "\u201CWhat is Disc Delivery\u201D body text" },
+				{ key: "archiveCount", label: "Number of archive editions to preview" }
+			] },
+			{ title: "Subscribe Page", path: "subscribe", fields: [
+				{ key: "title", label: "Product title" },
+				{ key: "shortDescription", label: "Short description" },
+				{ key: "image.src", label: "Main product image", image: true },
+				{ key: "gallery", label: "Gallery photos", repeat: true, fields: [{ key: "label", label: "Photo label" }, { key: "image", label: "Photo file path", image: true }] },
+				{ key: "options", label: "Subscription options", repeat: true, fields: [{ key: "label", label: "Option label" }, { key: "price", label: "Price" }, { key: "priceSuffix", label: "Price suffix" }, { key: "billingNote", label: "Billing note" }] },
+				{ key: "includedItems", label: "What you receive", repeat: true, fields: [{ key: "bold", label: "Bolded item name" }, { key: "text", label: "Rest of the sentence" }] },
+				{ key: "details", label: "Subscription details", repeat: true },
+				{ key: "shipping", label: "Shipping notes", repeat: true }
+			] },
+			{ title: "Archive Page", path: "archive", fields: [
+				{ key: "title", label: "Page title" },
+				{ key: "intro", label: "Intro text" },
+				{ key: "featuredSongsTitle", label: "Tracklist heading" }
+			] },
+			{ title: "Shop / Past Editions Page", path: "shop", fields: [
+				{ key: "title", label: "Page title" },
+				{ key: "intro", label: "Intro text" },
+				{ key: "purchaseSurcharge", label: "Amount added to the subscription price (\u20ac)" }
+			] },
+			{ title: "Editions (Archive + Shop, Each With 12 Artists)", path: "editions.items", repeat: true, fields: [
+				{ key: "editionCode", label: "Edition number" },
+				{ key: "monthYear", label: "Month and year" },
+				{ key: "inStock", label: "In stock (purchasable in Shop)", boolean: true },
+				{ key: "image.src", label: "Edition photo", image: true },
+				{ key: "description", label: "Description" },
+				{ key: "tracklist", label: "12 songs", repeat: true, fields: [{ key: "song", label: "Song title" }, { key: "artist", label: "Artist name" }] }
+			] },
+			{ title: "For Artists Page", path: "forArtists", fields: [
+				{ key: "who", label: "Who are we looking for?" },
+				{ key: "chosen", label: "Who gets chosen?" },
+				{ key: "doText", label: "What do we do?" },
+				{ key: "expectText", label: "What do we expect?" },
+				{ key: "submitIntro", label: "Submission introduction" },
+				{ key: "submitEmail", label: "Submission email" }
+			] },
+			{ title: "Contact Page", path: "contact", fields: [
+				{ key: "customerCare", label: "Customer care text" },
+				{ key: "business", label: "Press and business text" },
+				{ key: "artistNote", label: "Artist note" }
+			] },
+			{ title: "FAQ", path: "faq.categories", repeat: true, fields: [
+				{ key: "title", label: "Category title" },
+				{ key: "items", label: "Questions", repeat: true, fields: [{ key: "0", label: "Question" }, { key: "1", label: "Answer" }] }
+			] }
 		];
 		function get(object, path) { return path.split(".").filter(Boolean).reduce(function (value, key) { return value == null ? undefined : value[key]; }, object); }
 		function set(object, path, value) { const keys = path.split(".").filter(Boolean); const last = keys.pop(); const target = keys.reduce(function (value, key) { return value[key]; }, object); target[last] = value; }
@@ -70,7 +126,7 @@ in assets/ before you enter their file path.
 			if (options && options.repeat) {
 				const list = document.createElement("div"); list.className = "editor-repeat-list";
 				(value || []).forEach(function (item, index) { renderRepeatItem(path, label, item, index, options, list); });
-				const add = document.createElement("button"); add.type = "button"; add.className = "select-button editor-add-button"; add.textContent = "Add " + label.replace(/s$/, ""); add.addEventListener("click", function () { const current = get(content, path) || []; current.push(options.fields ? {} : ""); set(content, path, current); render(); }); list.appendChild(add); parent.appendChild(list); return;
+				const add = document.createElement("button"); add.type = "button"; add.className = "btn btn-outline editor-add-button"; add.textContent = "Add " + label.replace(/s$/, ""); add.addEventListener("click", function () { const current = get(content, path) || []; current.push(options.fields ? {} : ""); set(content, path, current); render(); }); list.appendChild(add); parent.appendChild(list); return;
 			}
 			parent.appendChild(field(path, label, value, options));
 		}
@@ -79,13 +135,13 @@ in assets/ before you enter their file path.
 			const legend = document.createElement("legend"); legend.textContent = label.replace(/s$/, "") + " " + (index + 1); group.appendChild(legend);
 			if (options.fields) options.fields.forEach(function (definition) { const itemPath = path + "." + index + "." + definition.key; renderValue(itemPath, definition.label, get(content, itemPath), definition, group); });
 			else group.appendChild(field(path + "." + index, label.replace(/s$/, ""), item, options));
-			const remove = document.createElement("button"); remove.type = "button"; remove.className = "select-button editor-remove-button"; remove.textContent = "Remove"; remove.addEventListener("click", function () { const values = get(content, path); values.splice(index, 1); set(content, path, values); render(); }); group.appendChild(remove); parent.appendChild(group);
+			const remove = document.createElement("button"); remove.type = "button"; remove.className = "btn btn-outline editor-remove-button"; remove.textContent = "Remove"; remove.addEventListener("click", function () { const values = get(content, path); values.splice(index, 1); set(content, path, values); render(); }); group.appendChild(remove); parent.appendChild(group);
 		}
 		function render() { root.replaceChildren(); sections.forEach(function (section) { const group = document.createElement("fieldset"); const legend = document.createElement("legend"); legend.textContent = section.title; group.appendChild(legend); if (section.repeat) renderValue(section.path, section.title, get(content, section.path), section, group); else section.fields.forEach(function (definition) { const path = section.path + "." + definition.key; renderValue(path, definition.label, get(content, path), definition, group); }); root.appendChild(group); }); }
 		function readFields() { root.querySelectorAll("[data-editor-path]").forEach(function (control) { set(content, control.dataset.editorPath, control.type === "checkbox" ? control.checked : control.value); }); }
 		function announce(message) { status.textContent = message; }
 		document.querySelector("[data-editor-save]").addEventListener("click", function () { readFields(); api.save(content); announce("Saved for this browser."); });
-		document.querySelector("[data-editor-reset]").addEventListener("click", function () { api.reset(); content = JSON.parse(JSON.stringify(api.defaults)); delete content.pageTextOverrides; render(); announce("Reset to defaults."); });
+		document.querySelector("[data-editor-reset]").addEventListener("click", function () { api.reset(); content = JSON.parse(JSON.stringify(api.defaults)); render(); announce("Reset to defaults."); });
 		document.querySelector("[data-editor-export]").addEventListener("click", function () { readFields(); const blob = new Blob([JSON.stringify(content, null, 2)], { type: "application/json" }); const link = document.createElement("a"); link.href = URL.createObjectURL(blob); link.download = "disc-delivery-content.json"; link.click(); URL.revokeObjectURL(link.href); announce("JSON exported."); });
 		document.querySelector("[data-editor-import]").addEventListener("change", function (event) { const file = event.target.files[0]; if (!file) return; const reader = new FileReader(); reader.onload = function () { try { content = JSON.parse(reader.result); render(); announce("JSON imported. Save Changes to keep it."); } catch (error) { announce("Could not read that JSON file."); } }; reader.readAsText(file); });
 		render();

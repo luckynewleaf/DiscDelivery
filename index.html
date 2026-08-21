@@ -6,49 +6,84 @@
 	<title>Disc Delivery</title>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="styles/style.css">
 </head>
 <body data-content-page="home">
-	<div class="page">
-		<header class="site-header">
-			<a class="logo-link" href="index.html" aria-label="Disc Delivery home">
-				<img class="logo-image" src="assets/DiscDelivery_Logo_White.png" alt="Disc Delivery">
-			</a>
-
-			<nav class="nav" aria-label="Main navigation">
-				<ul>
-					<li><a href="join-club.html">Join The Club</a></li>
-					<li><a href="shop.html">Shop</a></li>
-					<li><a href="about.html">About</a></li>
-					<li><a href="contact.html">Contact</a></li>
-					<li><a href="/account">Account</a></li>
-				</ul>
+	<header class="site-header">
+		<div class="header-row">
+			<nav class="main-nav" aria-label="Main navigation">
+				<ul data-site-nav></ul>
 			</nav>
-		</header>
+			<a class="wordmark" href="index.html" data-brand-name>Disc Delivery</a>
+			<div class="header-icons">
+				<a class="header-icon-link" href="/account" aria-label="Account" data-account-link>
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+				</a>
+				<button class="header-icon-link cart-toggle" type="button" aria-label="Open cart" data-cart-toggle>
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 8h12l-1 12H7L6 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+					<span class="cart-count" data-cart-count>0</span>
+				</button>
+			</div>
+		</div>
+	</header>
 
-		<main class="new-page home-page">
-			<section class="section-slab section-slab--plain">
-				<h1 class="section-heading page-main-title">Good music. Delivered.</h1>
-			</section>
+	<main>
+		<section class="hero">
+			<div class="hero-media" data-hero-media></div>
+			<div class="hero-overlay">
+				<div>
+					<h1 class="hero-heading" data-hero-heading>Good Music.<br>Delivered.</h1>
+					<p class="hero-cta-row"><a class="hero-cta" data-hero-cta href="subscribe.html">See the current edition</a></p>
+				</div>
+			</div>
+		</section>
 
-			<section class="hero" aria-label="Disc Delivery hero video space">
-				<div class="hero-photo" role="img" aria-label="Placeholder space for the Disc Delivery hero video"></div>
-			</section>
+		<section class="section how-section">
+			<span class="section-eyebrow">Disc Delivery</span>
+			<h2 class="section-title" data-how-title>How It Works</h2>
+			<p class="how-intro" data-how-intro></p>
+			<ol class="how-steps" data-how-steps></ol>
+		</section>
 
-			<section class="intro" aria-label="Disc Delivery intro">
+		<section class="section why-section">
+			<span class="section-eyebrow" data-why-title>Why Disc Delivery</span>
+			<h2 class="why-statement" data-why-statement>Music used to find you.</h2>
+			<div class="why-body" data-why-body><p></p><p></p></div>
+		</section>
 
-				<a class="join-link" href="join-club.html">Join the club</a>
-			</section>
-		</main>
+		<section class="section">
+			<div class="section-row-header">
+				<h2 class="section-title" data-archive-title>From the Archive</h2>
+				<a class="btn-text" data-archive-viewall href="archive.html">View Full Archive</a>
+			</div>
+			<div class="editions-grid" data-home-editions-grid></div>
+		</section>
+	</main>
 
-		<footer class="site-footer site-footer-legal" aria-label="Site footer">
-			<p class="footer-line footer-brand">Disc Delivery</p>
-			<p class="footer-line footer-links"><a href="privacy-policy.html">Privacy Policy</a><span aria-hidden="true">·</span><a href="terms-of-service.html">Terms of Service</a></p>
-			<p class="footer-line footer-copy">© 2026 Disc Delivery</p>
-		</footer>
-	</div>
+	<footer class="site-footer">
+		<p class="footer-brand" data-brand-name>Disc Delivery</p>
+		<p class="footer-legal" data-footer-legal></p>
+		<p class="footer-copy" data-footer-copyright></p>
+	</footer>
+
+	<div class="cart-backdrop" data-cart-backdrop hidden></div>
+	<aside class="cart-drawer" data-cart-drawer aria-hidden="true">
+		<div class="cart-head">
+			<h2>Cart</h2>
+			<button class="cart-close" type="button" aria-label="Close cart" data-cart-close>&times;</button>
+		</div>
+		<p class="editions-empty" data-cart-empty>Your cart is empty.</p>
+		<ul class="cart-items" data-cart-items></ul>
+		<div class="cart-footer">
+			<p class="cart-total"><span>Total</span><span data-cart-total>€0.00</span></p>
+			<a class="btn cart-checkout" href="/checkout">Checkout</a>
+		</div>
+	</aside>
+
 	<script src="scripts/site-content.js"></script>
 	<script src="scripts/content-loader.js"></script>
+	<script src="scripts/cart.js"></script>
 </body>
 </html>
+
